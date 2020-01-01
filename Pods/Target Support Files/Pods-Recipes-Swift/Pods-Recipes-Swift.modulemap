@@ -1,0 +1,6 @@
+framework module Pods_Recipes_Swift {
+  umbrella header "Pods-Recipes-Swift-umbrella.h"
+
+  export *
+  module * { export * }
+}

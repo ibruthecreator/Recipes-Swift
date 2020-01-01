@@ -1,0 +1,3 @@
+${PODS_ROOT}/Target Support Files/Pods-Recipes-Swift/Pods-Recipes-Swift-frameworks.sh
+${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework
+${BUILT_PRODUCTS_DIR}/Clarifai/Clarifai.framework

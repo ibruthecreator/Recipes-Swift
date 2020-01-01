@@ -22,6 +22,8 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     private var previewLayer: AVCaptureVideoPreviewLayer! = nil
 
     @IBOutlet weak private var previewView: UIView!
+    
+    var currentFrame: UIImage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +33,9 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
        
         // Start Session
         startSession()
+        
+        // Start Timer
+        startTimer()
     }
 
     // MARK: - Setup AVCapture
@@ -101,7 +106,18 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     func startSession() {
         session.startRunning()
     }
+    
+    // Start Timer
+    // Timer is so that the API isn't fired every single frame and to avoid bankruptcy from API fees
+    func startTimer() {
+        Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { (timer) in
+            self.captureInput()
+        }
+    }
 
+    // Capture Input From Session
+    func captureInput() {}
+    
     func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         print("Drop Frames")
     }
@@ -111,8 +127,19 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
         }
-       
-        let exifOrientation = exifOrientationFromDeviceOrientation()
+        
+        let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
+        
+        let temporaryContext = CIContext(options: nil)
+        let videoImage = temporaryContext.createCGImage(ciImage, from: CGRect(x: 0, y: 0, width: CGFloat(CVPixelBufferGetWidth(pixelBuffer)), height: CGFloat(CVPixelBufferGetHeight(pixelBuffer))))
+
+        var uiImage: UIImage? = nil
+        if let videoImage = videoImage {
+            uiImage = UIImage(cgImage: videoImage)
+        }
+        
+        currentFrame = uiImage
+        
         return
     }
 

@@ -60,5 +60,9 @@
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>For scanning and identifying different ingredients through your camera</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>NewYorkExtraLarge-Bold.otf</string>
+	</array>
 </dict>
 </plist>
