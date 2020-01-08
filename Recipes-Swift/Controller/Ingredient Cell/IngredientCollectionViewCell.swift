@@ -30,7 +30,7 @@ class IngredientCollectionViewCell: UICollectionViewCell {
     func setupViews() {
         self.layer.cornerRadius = 8
 
-        addButton.backgroundColor = UIColor.Theme.shopifyGreen
+        addButton.backgroundColor = UIColor.Theme.green
         addButton.makeCircular()
     }
     

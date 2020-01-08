@@ -7,5 +7,6 @@ target 'Recipes-Swift' do
 
   # Pods for Recipes-Swift
   pod 'Clarifai'
-
+  pod 'Alamofire'
+  pod 'SwiftyJSON'
 end

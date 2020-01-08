@@ -11,6 +11,7 @@ import UIKit
 class IngredientScanningViewController: CameraViewController {
     
     // MARK: - Outlets
+    var ingredientsLabel: UILabel!
     var ingredientsCollectionView: UICollectionView!
     var basketCollectionView: UICollectionView!
     var finishButton: UIButton!
@@ -22,16 +23,23 @@ class IngredientScanningViewController: CameraViewController {
 //        testPrediction()
     }
     
+    // MARK: - Change Status Bar to White
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     // MARK: - Setup Views
     func setupViews() {
         // Finish button
         finishButton = UIButton(frame: .zero)
         
-        finishButton.backgroundColor = UIColor.Theme.shopifyGreen
+        finishButton.backgroundColor = UIColor.Theme.green
         finishButton.titleLabel?.textColor = .white
         finishButton.titleLabel?.font = UIFont.systemFont(ofSize: 21, weight: .semibold)
         finishButton.setTitle("Continue", for: .normal)
         finishButton.layer.cornerRadius = 8
+        
+        finishButton.addTarget(self, action: #selector(goToRecipes), for: .touchUpInside)
         finishButton.disable()
         
         finishButton.translatesAutoresizingMaskIntoConstraints = false
@@ -72,6 +80,23 @@ class IngredientScanningViewController: CameraViewController {
         ingredientsCollectionView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         
         
+        // Ingredients Label
+        ingredientsLabel = UILabel(frame: .zero)
+        ingredientsLabel.text = "Ingredients"
+        ingredientsLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        ingredientsLabel.textColor = UIColor.white
+        
+        // Ingredients Label Constraints
+        ingredientsLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(ingredientsLabel)
+        
+        
+        ingredientsLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
+        ingredientsLabel.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        ingredientsLabel.widthAnchor.constraint(equalToConstant: 95).isActive = true
+        ingredientsLabel.heightAnchor.constraint(equalToConstant: 37).isActive = true
+        
+        ingredientsLabel.fadeOut()
         
         // Basket Collection View
         let layout2 = UICollectionViewFlowLayout()
@@ -92,7 +117,7 @@ class IngredientScanningViewController: CameraViewController {
 
         // Constraints for Basket Collection View
         basketCollectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
-        basketCollectionView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        basketCollectionView.leftAnchor.constraint(equalTo: self.ingredientsLabel.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
         basketCollectionView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
         basketCollectionView.heightAnchor.constraint(equalToConstant: 37).isActive = true
 
@@ -128,9 +153,19 @@ class IngredientScanningViewController: CameraViewController {
     func enableDisableContinueButton() {
         if Prediction.sharedInstance.basket.count == 0 {
             finishButton.disable()
+            ingredientsLabel.fadeOut()
         } else {
             finishButton.enable()
+            ingredientsLabel.fadeIn()
         }
+    }
+    
+    // Go to recipes page
+    @objc func goToRecipes() {
+        self.performSegue(withIdentifier: "goToRecipes", sender: self)
+        
+        // Stop timer and API requests from shooting while in the Recipes page
+        self.stop()
     }
 }
 

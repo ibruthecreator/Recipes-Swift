@@ -10,6 +10,6 @@ import UIKit
 
 extension UIColor {
     struct Theme {
-        static let shopifyGreen = UIColor(red: 150/255, green: 191/255, blue: 72/255, alpha: 1.0)
+        static let green = UIColor(red: 75/255, green: 217/255, blue: 133/255, alpha: 1.0)
     }
 }

@@ -13,10 +13,11 @@ class HomeViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var startScanningButton: UIButton!
     @IBOutlet weak var onboardingCollectionView: UICollectionView!
+    @IBOutlet weak var pageControl: UIPageControl!
     
     // Onboarding collection view content
-    let images: [String] = ["Scanning", "Results", "Results"]
-    let titles: [String] = ["Scan for ingredients", "Add items to your basket", "Find ingredients"]
+    let images: [String] = ["Scanning", "Results", "Recipes"]
+    let titles: [String] = ["Scan for ingredients", "Add items to your basket", "Find recipes"]
     let descriptions: [String] = ["Using your camera, hover over any ingredients you have in your house. These can be anything from milk to cauliflower to salmon to pasta. Using an ML model, the app will recognize it right away!", "When you find the ingredient you're looking for from our results, simply add it to your basket and continue on with the next ingredient.", "Once you're finished, you'll be able to find all types of recipes that you can whip up using the ingredients you added to your basket, just like that!"]
     
     override func viewDidLoad() {
@@ -30,7 +31,18 @@ class HomeViewController: UIViewController {
     // MARK: - Setup Views
     func setupViews() {
         startScanningButton.layer.cornerRadius = 8
-        startScanningButton.backgroundColor = UIColor.Theme.shopifyGreen
+        startScanningButton.backgroundColor = UIColor.Theme.green
+        
+        let flowLayout = SnappingCollectionViewLayout()
+        flowLayout.scrollDirection = .horizontal
+        
+        onboardingCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
+        onboardingCollectionView.collectionViewLayout = flowLayout
+        
+        pageControl.numberOfPages = 3
+        pageControl.currentPage = 0
+        pageControl.currentPageIndicatorTintColor = UIColor.Theme.green
+        pageControl.pageIndicatorTintColor = UIColor.lightGray
     }
 
 }
@@ -50,8 +62,13 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        self.pageControl.currentPage = indexPath.row
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
     
 }
+

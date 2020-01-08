@@ -24,6 +24,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     @IBOutlet weak private var previewView: UIView!
     
     var currentFrame: UIImage?
+    var timer: Timer!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,10 +108,16 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         session.startRunning()
     }
     
+    // Stop Session and Invalidate Timer
+    func stop() {
+        session.stopRunning()
+        timer.invalidate()
+    }
+    
     // Start Timer
     // Timer is so that the API isn't fired every single frame and to avoid bankruptcy from API fees
     func startTimer() {
-        Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { (timer) in
+        timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { (timer) in
             self.captureInput()
         }
     }
