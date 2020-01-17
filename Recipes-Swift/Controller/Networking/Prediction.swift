@@ -48,9 +48,10 @@ class Prediction {
     }
     
     // Adds an ingredient to a basket and makes sure that it's not already there (no duplicates)
+    // Adds to the *beginning* of the array
     func addToBasket(_ ingredient: String) {
         if !isInBasket(ingredient) {       // If basket doesn't contain ingredient already
-            self.basket.append(ingredient)
+            self.basket.insert(ingredient, at: 0)
         }
     }
     

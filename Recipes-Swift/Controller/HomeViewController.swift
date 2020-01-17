@@ -33,7 +33,7 @@ class HomeViewController: UIViewController {
         startScanningButton.layer.cornerRadius = 8
         startScanningButton.backgroundColor = UIColor.Theme.green
         
-        let flowLayout = SnappingCollectionViewLayout()
+        let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         
         onboardingCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
