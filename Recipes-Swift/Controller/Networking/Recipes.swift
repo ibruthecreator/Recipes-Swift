@@ -15,64 +15,75 @@ class Recipes {
     
     var recipes: [Recipe] = []
 
-    let endpoint = "https://api.edamam.com/search"
-    
-    let app_id = "ef94e304"
-    let app_key = "7cb742a697f56f62602761945b7b0fc4"
+    let findByIngredientsEndpoint = "https://api.spoonacular.com/recipes/findByIngredients"
+    let informationBulkEndpoint = "https://api.spoonacular.com/recipes/informationBulk"
+
+    // Fixed parameters - everything except ingredients
+    let apiKey = "7845152a156345c9b7ffb9ea93a0b4ae"
     
     // MARK: - Fetch Recipes
+    // This only gets information such as title, image, and the sorts
+    // While this is sufficient, we need more details for each recipe in the case that the user clicks for more information
+    // The API requires that we use two different endpoints, one that searches by ingredients and one that gets details for the recipe
+    // We call a method that utilises the second endpoint once we are finished decoding the recipes returned from this endpoint
     func fetchRecipes(completion: @escaping (_ success: Bool) -> ()) {
-        let allIngredients = Prediction.sharedInstance.basket.joined(separator: " and ") // "and" keyword between words is how the API expects input
+        let allIngredients = Prediction.sharedInstance.basket.joined(separator: ",") // "," between words is how the API expects input
         
-        //declare parameter as a dictionary which contains string as key and value combination. considering inputs are valid
-        let parameters: Parameters = ["app_id": app_id, "app_key": app_key, "q": allIngredients]
+        let query = "?apiKey=\(apiKey)&ingredients=\(allIngredients)&number=5&ranking=1&ignorePantry=true"
         
-        //create the url with URL
-        if let url = URL(string: endpoint) {
-            Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default).responseJSON { (dataResponse) in
-                if let error = dataResponse.error {
-//                    completion(nil, nil, nil, "Error")
-                    print(error.localizedDescription)
-                    return
-                }
-                if let data = dataResponse.data {
-                    do {
-                        let recipesJSON = try JSON(data: data)
-                        if let hits = recipesJSON["hits"].array {
-                            for hit in hits {
-                                let recipe = hit["recipe"]
-                                
-                                let recipeRaw = try recipe.rawData()
-                                let decoder = JSONDecoder()
-                                
-                                do {
-                                    let recipe = try decoder.decode(Recipe.self, from: recipeRaw)
-                                    self.recipes.append(recipe)
-                                } catch {
-                                    print(error.localizedDescription)
-                                }
+        if let url = URL(string: findByIngredientsEndpoint + query) {
+            do {
+                let request = try URLRequest(url: url, method: .get)
+                
+                URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    if let data = data {
+                        do {
+                            let recipes = try JSONDecoder().decode([Recipe].self, from: data)
+                            
+                            self.fetchAllRecipeInformation(recipes: recipes) { (success) in
+                                completion(true)
                             }
+                        } catch let error {
+                            print(error)
                         }
-//                        if let array = recipes.array {
-//                            for recipe in array {
-//                                let jsonData = try recipe.rawData()
-//                                print(recipe)
-//                                print("------")
-//                                let decoder = JSONDecoder()
-//                                do {
-//                                    let recipe = try decoder.decode(Recipe.self, from: jsonData)
-//                                    self.recipes.append(recipe)
-//                                } catch {
-//                                    print(error.localizedDescription)
-//                                }
-//                            }
-//                        }
-                        completion(true)
-                    } catch {
-                        print(error)
-                        completion(false)
                     }
-                }
+                }.resume()
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    // MARK: - Fetch Recipe Information
+    func fetchAllRecipeInformation(recipes: [Recipe], completion: @escaping (_ sucess: Bool) -> ()) {
+        var recipeIDs: [String] = []
+        
+        for recipe in recipes {
+            recipeIDs.append(String(recipe.id))
+        }
+         
+        let recipeIDsQuery = recipeIDs.joined(separator: ",") // "," between words is how the API expects input
+        let query = "?apiKey=\(apiKey)&ids=\(recipeIDsQuery)"
+        
+        if let url = URL(string: informationBulkEndpoint + query) {
+            do {
+                let request = try URLRequest(url: url, method: .get)
+                
+                URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    if let data = data {
+                        print("data")
+                        do {
+                            let recipesWithDetail = try JSONDecoder().decode([Recipe].self, from: data)
+                            self.recipes = recipesWithDetail
+                            
+                            completion(true)
+                        } catch let error {
+                            print(error)
+                        }
+                    }
+                }.resume()
+            } catch {
+                print(error)
             }
         }
     }

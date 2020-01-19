@@ -17,6 +17,8 @@ class BasketCollectionViewCell: UICollectionViewCell {
     
     var delegate: BasketCellDelegate?
     
+    var justAdded: Bool = false
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -26,12 +28,29 @@ class BasketCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Setup Views
     func setupViews() {
-        self.layer.cornerRadius = self.frame.height / 2
+        self.makeCircular()
+        self.layer.masksToBounds = true // Clips off anything overflowing edges
     }
 
     // MARK: - Update Label
     func updateLabel() {
         ingredientLabel.text = ingredient?.capitalizeFirstLetter() ?? "Ingredient"
+    }
+    
+    // MARK: - Flash Green
+    // Just an indicator to show that this ingredient was just added,
+    // This makes it more visible in the case that it was added by accident and also as a way to provide feedback to the user after adding
+    func flashGreen() {
+        let greenView = UIView(frame: self.frame)
+        greenView.backgroundColor = UIColor.Theme.green
+        
+        self.addSubview(greenView)
+        sendSubviewToBack(greenView)
+        
+        // Fade out after one second
+        greenView.fadeOut(withDelay: 1.5)
+        
+        justAdded = false
     }
     
     // MARK: - Remove From Basket

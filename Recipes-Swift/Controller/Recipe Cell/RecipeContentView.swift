@@ -59,9 +59,15 @@ import UIKit
     
     func updateContent() {
         if let recipe = recipe {
-            recipeImageView.download(from: recipe.image)
-            sourceLabel.text = recipe.source
-            recipeNameLabel.text = recipe.label
+            recipeImageView.download(from: recipe.displayImage)
+            sourceLabel.text = recipe.sourceName
+            
+            if recipe.vegetarian ?? false {
+                recipeNameLabel.text = "🌱 \(recipe.title)"
+                return
+            }
+            
+            recipeNameLabel.text = recipe.title
         }
     }
     

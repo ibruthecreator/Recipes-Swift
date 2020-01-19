@@ -15,12 +15,23 @@ class IngredientScanningViewController: CameraViewController {
     var ingredientsCollectionView: UICollectionView!
     var basketCollectionView: UICollectionView!
     var finishButton: UIButton!
+    var exitButton: UIButton!
+    
+    // Boolean value on whether or not an ingredient was just added to the basket
+    // Updated by delegate methods
+    var justAdded: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupViews()
-//        testPrediction()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        Prediction.sharedInstance.clearBasketAndPredictions()
+        
+        ingredientsCollectionView.reloadData()
+        basketCollectionView.reloadData()
     }
     
     // MARK: - Change Status Bar to White
@@ -30,6 +41,27 @@ class IngredientScanningViewController: CameraViewController {
     
     // MARK: - Setup Views
     func setupViews() {
+        
+        // Exit Button
+        exitButton = UIButton(frame: .zero)
+        
+        exitButton.backgroundColor = UIColor.Theme.red
+        exitButton.tintColor = UIColor.white
+        exitButton.titleLabel?.font = UIFont.systemFont(ofSize: 21, weight: .semibold)
+        exitButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+        exitButton.layer.cornerRadius = 8
+        
+        exitButton.addTarget(self, action: #selector(dismissScanner), for: .touchUpInside)
+
+        exitButton.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(exitButton)
+        
+        exitButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+        exitButton.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor, constant: -20).isActive = true
+        exitButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        exitButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        
+        
         // Finish button
         finishButton = UIButton(frame: .zero)
         
@@ -46,10 +78,9 @@ class IngredientScanningViewController: CameraViewController {
         self.view.addSubview(finishButton)
         
         finishButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+        finishButton.rightAnchor.constraint(equalTo: self.exitButton.leftAnchor, constant: -10).isActive = true
         finishButton.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
-        finishButton.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor, constant: -20).isActive = true
         finishButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
         
         
         // Ingredients Collection View
@@ -69,6 +100,7 @@ class IngredientScanningViewController: CameraViewController {
         ingredientsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(ingredientsCollectionView)
         
+        
         // Constraints for Ingredients Collection View
         ingredientsCollectionView.bottomAnchor.constraint(equalTo: finishButton.topAnchor, constant: -20).isActive = true
         ingredientsCollectionView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
@@ -86,6 +118,7 @@ class IngredientScanningViewController: CameraViewController {
         ingredientsLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         ingredientsLabel.textColor = UIColor.white
         
+        
         // Ingredients Label Constraints
         ingredientsLabel.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(ingredientsLabel)
@@ -97,6 +130,7 @@ class IngredientScanningViewController: CameraViewController {
         ingredientsLabel.heightAnchor.constraint(equalToConstant: 37).isActive = true
         
         ingredientsLabel.fadeOut()
+        
         
         // Basket Collection View
         let layout2 = UICollectionViewFlowLayout()
@@ -126,17 +160,6 @@ class IngredientScanningViewController: CameraViewController {
         basketCollectionView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     }
     
-    // Test prediction
-    func testPrediction() {
-        if let image = UIImage(named: "shrimp") {
-            Prediction.sharedInstance.predictFood(fromImage: image) { (predictions) in
-                DispatchQueue.main.async {
-                    self.ingredientsCollectionView.reloadData()
-                }
-            }
-        }
-    }
-    
     // Capture Input and send it to the Clarifai API
     override func captureInput() {
         if let image = self.currentFrame {
@@ -144,7 +167,6 @@ class IngredientScanningViewController: CameraViewController {
                 DispatchQueue.main.async {
                     self.ingredientsCollectionView.reloadData()
                 }
-                print(predictions)
             }
         }
     }
@@ -163,6 +185,14 @@ class IngredientScanningViewController: CameraViewController {
     // Go to recipes page
     @objc func goToRecipes() {
         self.performSegue(withIdentifier: "goToRecipes", sender: self)
+        
+        // Stop timer and API requests from shooting while in the Recipes page
+        self.stop()
+    }
+    
+    // Dismiss scanning page and go back home
+    @objc func dismissScanner() {
+        self.navigationController?.popViewController(animated: true)
         
         // Stop timer and API requests from shooting while in the Recipes page
         self.stop()
@@ -188,6 +218,16 @@ extension IngredientScanningViewController: UICollectionViewDelegate, UICollecti
             cell.delegate = self
             cell.ingredient = Prediction.sharedInstance.basket[indexPath.row]
             cell.updateLabel()
+            
+            cell.sizeToFit()
+            
+            // If this is the first cell, and the ingredient was just added (not deleted + updated)
+            // Then add the green flash to indicate it was just added
+            if self.justAdded && indexPath.row == 0 {
+                cell.flashGreen()
+            }
+            
+            self.justAdded = false
                         
             return cell
         }
@@ -195,13 +235,15 @@ extension IngredientScanningViewController: UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = collectionView.frame.height
-        
+
         return CGSize(width: 200, height: height)
     }
 }
 
 extension IngredientScanningViewController: IngredientCellDelegate {
     func didAddIngredient() {
+        self.justAdded = true
+        
         ingredientsCollectionView.reloadData()
         basketCollectionView.reloadData()
         enableDisableContinueButton()
@@ -210,6 +252,8 @@ extension IngredientScanningViewController: IngredientCellDelegate {
 
 extension IngredientScanningViewController: BasketCellDelegate {
     func didRemoveIngredient() {
+        self.justAdded = false
+        
         basketCollectionView.reloadData()
         enableDisableContinueButton()
     }

@@ -158,7 +158,8 @@
 				10A853DF23CA7D51008FB36F /* Animation */,
 				107B0A1F23B944A2004105BD /* Protocols */,
 				107B0A1A23B93AB8004105BD /* Basket Cell */,
-				108C6B1323B6D8D4008E9724 /* Ingredient Cell */,
+				108C6B1323B6D8D4008E9724 /* Ingredient CV Cell */,
+				10B688C323D51F380012171F /* Ingredient TV Cell */,
 				107B0A2923BA994D004105BD /* Onboarding Cell */,
 				10B1F67823BEA232005A5440 /* Recipe Cell */,
 				108C6B1023B6D388008E9724 /* Networking */,
@@ -233,13 +234,13 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
-		108C6B1323B6D8D4008E9724 /* Ingredient Cell */ = {
+		108C6B1323B6D8D4008E9724 /* Ingredient CV Cell */ = {
 			isa = PBXGroup;
 			children = (
 				108C6B1423B6D8EF008E9724 /* IngredientCollectionViewCell.swift */,
 				108C6B1523B6D8EF008E9724 /* IngredientCollectionViewCell.xib */,
 			);
-			path = "Ingredient Cell";
+			path = "Ingredient CV Cell";
 			sourceTree = "<group>";
 		};
 		10A853DF23CA7D51008FB36F /* Animation */ = {
@@ -258,6 +259,14 @@
 				1001495123CFB78E0087D746 /* RecipeContentView.xib */,
 			);
 			path = "Recipe Cell";
+			sourceTree = "<group>";
+		};
+		10B688C323D51F380012171F /* Ingredient TV Cell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Ingredient TV Cell";
+			path = ../..;
 			sourceTree = "<group>";
 		};
 		657A88D0D7FEDF2D2B890055 /* Frameworks */ = {

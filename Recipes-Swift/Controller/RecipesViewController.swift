@@ -52,7 +52,9 @@ class RecipesViewController: UIViewController {
     func fetchRecipes() {
         Recipes.sharedInstance.fetchRecipes { (success) in
             if success {
-                self.recipesTableView.reloadData()
+                DispatchQueue.main.async {
+                    self.recipesTableView.reloadData()
+                }
                 
                 return
             }
@@ -80,6 +82,8 @@ extension RecipesViewController: UITableViewDelegate, UITableViewDataSource {
         let recipe = Recipes.sharedInstance.recipes[indexPath.row]
         cell.recipeContentView.recipe = recipe
         cell.recipeContentView.updateContent()
+        
+        print(recipe.extendedIngredients?.first?.name ?? "Boobs")
         
         cell.contentView.autoresizingMask = .flexibleHeight
         

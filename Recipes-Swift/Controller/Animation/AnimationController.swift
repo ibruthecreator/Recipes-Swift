@@ -82,8 +82,8 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
         detailView.recipeCardContentView.fixLabelWidth(width: frame.width - (13*2))
         
         detailView.recipeCardContentView.layoutIfNeeded()
-
         detailView.view.layoutIfNeeded()
+        detailView.view.updateConstraints()
         
         view.layer.cornerRadius = 18
         view.layer.shadowOpacity = 0.12

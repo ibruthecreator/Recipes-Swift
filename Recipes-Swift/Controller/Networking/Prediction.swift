@@ -69,4 +69,11 @@ class Prediction {
         // specified ingredient to be removed is removed from the array itaelf
         predictions = predictions.filter { $0 != ingredient }
     }
+    
+    // Clears basket and clears predicted ingredients
+    // This will be called everytime the scan view controller is dismissed and then revisited
+    func clearBasketAndPredictions() {
+        self.basket.removeAll()
+        self.predictions.removeAll()
+    }
 }
