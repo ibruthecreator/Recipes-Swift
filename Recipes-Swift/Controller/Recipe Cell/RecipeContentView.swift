@@ -69,7 +69,7 @@ import UIKit
             sourceLabel.text = recipe.sourceName
             
             if recipe.vegetarian ?? false {
-                recipeNameLabel.text = "🌱 \(recipe.title.capitalized)"
+                recipeNameLabel.text = "🌱 \(recipe.title?.capitalized ?? "Recipe")"
                 return
             }
             

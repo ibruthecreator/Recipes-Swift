@@ -13,6 +13,10 @@ class RecipesViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var recipesTableView: UITableView!
     @IBOutlet weak var recipesTableViewHeightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var ingredientsCollectionView: UICollectionView!
+    @IBOutlet weak var ingredientsCollectionViewHeightConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var scrollView: UIScrollView!
     
     var selectedRecipeFrame: CGRect?
@@ -46,6 +50,8 @@ class RecipesViewController: UIViewController {
         let clearView = UIView()
         clearView.backgroundColor = UIColor.clear
         UITableViewCell.appearance().selectedBackgroundView = clearView
+        
+        ingredientsCollectionView.register(UINib(nibName: "BasketCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "basketCell")
     }
     
     // MARK: - Fetch Ingredients
@@ -69,17 +75,26 @@ class RecipesViewController: UIViewController {
         recipesTableViewHeightConstraint.constant = recipesContentSize
     }
     
+    // MARK: - Layout Collection View
+    func layoutCollectionView() {
+        let ingredientsContentSize = ingredientsCollectionView.contentSize.height
+        ingredientsCollectionViewHeightConstraint.constant = ingredientsContentSize
+    }
+    
     // MARK: - Close
     @IBAction func close(_ sender: Any) {
         // TODO: - Maybe have an alert asking if the user really wants to leave, just in case it was an accident
         
-        // Empty recipes found
+        // Empty everything
         Recipes.sharedInstance.recipes.removeAll()
+        Prediction.sharedInstance.predictions.removeAll()
+        Prediction.sharedInstance.basket.removeAll()
         
         self.navigationController?.popToRootViewController(animated: true)
     }
 }
 
+// MARK: - Table View Delegate Methods
 extension RecipesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Recipes.sharedInstance.recipes.count
@@ -142,5 +157,30 @@ extension RecipesViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.animate(isHighlighted: false)
             })
         }
+    }
+}
+
+// MARK: - Collection View Delegate Methods
+extension RecipesViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return Prediction.sharedInstance.basket.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "basketCell", for: indexPath) as! BasketCollectionViewCell
+        
+        let ingredient = Prediction.sharedInstance.basket[indexPath.row]
+        cell.ingredient = ingredient
+        cell.updateLabel()
+
+        cell.backgroundColor = UIColor.Theme.green
+        
+        cell.makeDisplayOnly()
+        
+        DispatchQueue.main.async {
+            self.layoutCollectionView()
+        }
+    
+        return cell
     }
 }

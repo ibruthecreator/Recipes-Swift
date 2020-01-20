@@ -181,7 +181,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lEZ-iJ-o1v">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="856"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="789"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recipes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="teW-5F-3ae">
                                                 <rect key="frame" x="20" y="35" width="309" height="58.5"/>
@@ -193,21 +193,21 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ruv-t9-Fi1">
-                                                <rect key="frame" x="0.0" y="111.5" width="414" height="684.5"/>
+                                                <rect key="frame" x="0.0" y="229" width="414" height="500"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="684.5" id="sMo-vQ-rLh"/>
+                                                    <constraint firstAttribute="height" constant="500" id="sMo-vQ-rLh"/>
                                                 </constraints>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="recipeCell" rowHeight="432" id="WVM-h3-Pmc" customClass="RecipeTableViewCell" customModule="Recipes" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="28" width="414" height="432"/>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="recipeCell" rowHeight="506" id="WVM-h3-Pmc" customClass="RecipeTableViewCell" customModule="Recipes" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="28" width="414" height="506"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WVM-h3-Pmc" id="51e-NE-6Xc">
-                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="432"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="506"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OCQ-XM-79J" customClass="RecipeContentView" customModule="Recipes" customModuleProvider="target">
-                                                                    <rect key="frame" x="20" y="16" width="374" height="400"/>
+                                                                    <rect key="frame" x="20" y="16" width="374" height="474"/>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                 </view>
                                                             </subviews>
@@ -243,18 +243,39 @@
                                                     <action selector="close:" destination="60N-ea-EB4" eventType="touchUpInside" id="dJy-6U-bxI"/>
                                                 </connections>
                                             </button>
+                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nwq-xF-zSC">
+                                                <rect key="frame" x="20" y="109" width="374" height="100"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="vJA-mz-KvB"/>
+                                                </constraints>
+                                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fm8-N6-xeH">
+                                                    <size key="itemSize" width="152" height="39"/>
+                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                </collectionViewFlowLayout>
+                                                <cells/>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="60N-ea-EB4" id="gU0-Gi-yi8"/>
+                                                    <outlet property="delegate" destination="60N-ea-EB4" id="wnp-rp-3Xq"/>
+                                                </connections>
+                                            </collectionView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="nwq-xF-zSC" secondAttribute="trailing" constant="20" id="9qZ-yh-btR"/>
                                             <constraint firstAttribute="trailing" secondItem="4VZ-Ce-LAD" secondAttribute="trailing" constant="20" id="EML-8Y-TNf"/>
                                             <constraint firstItem="4VZ-Ce-LAD" firstAttribute="leading" secondItem="teW-5F-3ae" secondAttribute="trailing" constant="20" id="J6y-03-cVy"/>
+                                            <constraint firstItem="Ruv-t9-Fi1" firstAttribute="top" secondItem="nwq-xF-zSC" secondAttribute="bottom" constant="20" id="OOL-H0-zeh"/>
                                             <constraint firstItem="Ruv-t9-Fi1" firstAttribute="leading" secondItem="lEZ-iJ-o1v" secondAttribute="leading" id="Prg-Yw-WZ8"/>
-                                            <constraint firstItem="Ruv-t9-Fi1" firstAttribute="top" secondItem="4VZ-Ce-LAD" secondAttribute="bottom" constant="18" id="atb-1B-Mib"/>
+                                            <constraint firstItem="nwq-xF-zSC" firstAttribute="leading" secondItem="lEZ-iJ-o1v" secondAttribute="leading" constant="20" id="WkV-Y4-mgR"/>
+                                            <constraint firstItem="nwq-xF-zSC" firstAttribute="top" secondItem="teW-5F-3ae" secondAttribute="bottom" constant="15.5" id="abg-Jt-fwR"/>
+                                            <constraint firstItem="4VZ-Ce-LAD" firstAttribute="top" secondItem="lEZ-iJ-o1v" secondAttribute="top" constant="35" id="cag-WL-JZa"/>
                                             <constraint firstAttribute="trailing" secondItem="Ruv-t9-Fi1" secondAttribute="trailing" id="jdE-nY-Czm"/>
                                             <constraint firstItem="teW-5F-3ae" firstAttribute="leading" secondItem="lEZ-iJ-o1v" secondAttribute="leading" constant="20" id="kf5-gH-LZ6"/>
                                             <constraint firstItem="teW-5F-3ae" firstAttribute="top" secondItem="lEZ-iJ-o1v" secondAttribute="top" constant="35" id="kvB-1z-Utx"/>
                                             <constraint firstAttribute="bottom" secondItem="Ruv-t9-Fi1" secondAttribute="bottom" constant="60" id="s92-yH-lcN"/>
-                                            <constraint firstItem="Ruv-t9-Fi1" firstAttribute="top" secondItem="teW-5F-3ae" secondAttribute="bottom" constant="18" id="um4-fz-apy"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -281,6 +302,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="KAF-Lj-sv8"/>
                     <connections>
+                        <outlet property="ingredientsCollectionView" destination="nwq-xF-zSC" id="6GY-lF-Coo"/>
+                        <outlet property="ingredientsCollectionViewHeightConstraint" destination="vJA-mz-KvB" id="tPj-VR-Kuf"/>
                         <outlet property="recipesTableView" destination="Ruv-t9-Fi1" id="9El-cR-j33"/>
                         <outlet property="recipesTableViewHeightConstraint" destination="sMo-vQ-rLh" id="Aoa-QZ-ItA"/>
                         <outlet property="scrollView" destination="9Jt-c3-tsB" id="xzw-hX-Z2C"/>
@@ -288,7 +311,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qze-eb-PHJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2405.7971014492755" y="136.95652173913044"/>
+            <point key="canvasLocation" x="2405.7971014492755" y="136.60714285714286"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="44q-j5-JVI">

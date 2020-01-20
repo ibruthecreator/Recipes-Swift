@@ -27,13 +27,6 @@ class IngredientScanningViewController: CameraViewController {
         setupViews()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        Prediction.sharedInstance.clearBasketAndPredictions()
-        
-        ingredientsCollectionView.reloadData()
-        basketCollectionView.reloadData()
-    }
-    
     // MARK: - Change Status Bar to White
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -193,6 +186,11 @@ class IngredientScanningViewController: CameraViewController {
     // Dismiss scanning page and go back home
     @objc func dismissScanner() {
         self.navigationController?.popViewController(animated: true)
+        
+        Prediction.sharedInstance.clearBasketAndPredictions()
+        
+        ingredientsCollectionView.reloadData()
+        basketCollectionView.reloadData()
         
         // Stop timer and API requests from shooting while in the Recipes page
         self.stop()

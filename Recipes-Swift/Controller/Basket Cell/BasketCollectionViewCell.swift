@@ -12,13 +12,12 @@ class BasketCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Outlets
     @IBOutlet weak var ingredientLabel: UILabel!
+    @IBOutlet weak var deleteButton: UIButton!
     
     var ingredient: String?
     
     var delegate: BasketCellDelegate?
-    
-    var justAdded: Bool = false
-    
+        
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -34,7 +33,7 @@ class BasketCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Update Label
     func updateLabel() {
-        ingredientLabel.text = ingredient?.capitalizeFirstLetter() ?? "Ingredient"
+        ingredientLabel.text = ingredient?.capitalized ?? "Ingredient"
     }
     
     // MARK: - Flash Green
@@ -49,8 +48,6 @@ class BasketCollectionViewCell: UICollectionViewCell {
         
         // Fade out after one second
         greenView.fadeOut(withDelay: 1.5)
-        
-        justAdded = false
     }
     
     // MARK: - Remove From Basket
@@ -59,5 +56,12 @@ class BasketCollectionViewCell: UICollectionViewCell {
             Prediction.sharedInstance.removeFromBasket(ingredient)
             delegate?.didRemoveIngredient()
         }
+    }
+    
+    // MARK: - Make Display
+    // Disables delete button and makes background green
+    func makeDisplayOnly() {
+        deleteButton.isEnabled = true
+        deleteButton.isHidden = true
     }
 }
