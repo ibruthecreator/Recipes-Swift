@@ -11,7 +11,6 @@ import UIKit
 class AnimationController: NSObject {
     private let animationDuration: Double
     private let animationType: AnimationType
-    private var frameOfCellBox: CGRect?
     
     // Two types of animation types, one to open a detail view controller and one to dismiss it
     enum AnimationType {
@@ -33,32 +32,26 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         // Get the view controller we are going to, and the view controller we are coming from
-        guard let toViewController = transitionContext.viewController(forKey: .to) as? RecipeDetailViewController,
+        guard let toViewController = transitionContext.viewController(forKey: .to),
             let fromViewController = transitionContext.viewController(forKey: .from) else {
                 transitionContext.completeTransition(false)
                 return
         }
         
-
-        // Get frame of selected recipe
-        guard let selectedRecipeFrame = toViewController.cellFrame else {
-            transitionContext.completeTransition(false)
-            return
-        }
-        
         switch animationType {
             case .present:
+                toViewController.view.alpha = 0.0
                 transitionContext.containerView.addSubview(toViewController.view)
-                presentAnimation(with: transitionContext, viewToAnimate: toViewController.view, fromFrame: selectedRecipeFrame)
+                presentAnimation(with: transitionContext, viewToAnimate: toViewController.view)
                 
             case .dismiss:
                 transitionContext.containerView.addSubview(toViewController.view)
                 transitionContext.containerView.addSubview(fromViewController.view)
-//                dismissAnimation(with: transitionContext, viewToAnimate: fromViewController.view, toFrame: <#T##CGRect#>)
+                dismissAnimation(with: transitionContext, viewToAnimate: fromViewController.view)
         }
     }
     
-    func presentAnimation(with transitionContext: UIViewControllerContextTransitioning, viewToAnimate view: UIView, fromFrame frame: CGRect) {
+    func presentAnimation(with transitionContext: UIViewControllerContextTransitioning, viewToAnimate view: UIView) {
         let originalFrame = view.frame  // Target's original frame in the "from" view controller, which is essentially full screen
         let originalBounds = view.bounds // VC's bounds in its own coordinate system
                 
@@ -67,13 +60,13 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
             return
         }
         
+        // Get frame of selected recipe
+        guard let frame = detailView.cellFrame else {
+            transitionContext.completeTransition(false)
+            return
+        }
         
         view.frame = frame
-        
-        /*
-        let sizeDifference = (view.bounds.size.width - frame.size.width) / 2
-        view.bounds = CGRect(origin: CGPoint(x: sizeDifference, y: 0), size: view.bounds.size)  // Same size, centered
-        */
         
         detailView.recipeCardContentViewLeadingAnchor.isActive = false
         detailView.recipeCardContentViewTrailingAnchor.isActive = false
@@ -81,41 +74,30 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
         detailView.recipeCardContentViewHeightConstraint.constant = frame.height
         detailView.recipeCardContentView.fixLabelWidth(width: frame.width - (13*2))
         
-        detailView.recipeCardContentView.layoutIfNeeded()
-        detailView.view.layoutIfNeeded()
-        detailView.view.updateConstraints()
-        
         view.layer.cornerRadius = 18
-        view.layer.shadowOpacity = 0.12
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOffset = CGSize(width: 0, height: 2)
-        view.layer.shadowRadius = 18
+        view.layer.masksToBounds = true
         
+        view.transform = CGAffineTransform(scaleX: 0.94, y: 0.94)   // Matches current state of cell (highlighted)
+        view.alpha = 1.0   // Only once transformation is complete in order to match the cell, do we make the view visible
+        
+        // Flush changes
+        detailView.recipeCardContentView.layoutIfNeeded()
         view.layoutIfNeeded()
         view.layoutSubviews()
-        
-        frameOfCellBox = frame // Save this frame for later when dismissing so that the cell can go back to its original position
-        
+                
         let duration = transitionDuration(using: transitionContext)
         
         UIView.animateKeyframes(withDuration: duration, delay: 0, options: .calculationModeLinear, animations: {
-            // Bounce "inwards"
-            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.2) {
-                view.transform = CGAffineTransform(scaleX: 0.94, y: 0.94)
-                
-                view.layoutIfNeeded()
-            }
-            
-            UIView.addKeyframe(withRelativeStartTime: 0.2, relativeDuration: 0.4) {
-                view.transform = CGAffineTransform(scaleX: 1, y: 1)
-                view.transform = CGAffineTransform(translationX: 0, y: -100)    // For some reason translation transform didn't work, so updating the frame is the way to go
-                
-                view.layoutIfNeeded()
-            }
-            
             // Go up and bounce "outwards"
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.4) {
+                view.transform = CGAffineTransform(scaleX: 1, y: 1)
+                view.transform = CGAffineTransform(translationX: 0, y: -150)    // For some reason translation transform didn't work, so updating the frame is the way to go
+
+                view.layoutIfNeeded()
+            }
+            
             // Grow out
-            UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.4) {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.9) {
                 view.frame = originalFrame
                 view.bounds = originalBounds
                 
@@ -132,16 +114,38 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
         }
     }
     
-    func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning, viewToAnimate view: UIView, toFrame frame: CGRect) {
-        let finalFrame = frame
-
+    func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning, viewToAnimate view: UIView) {
         view.clipsToBounds = true
-
+        
+        guard let detailView = transitionContext.viewController(forKey: .from) as? RecipeDetailViewController else {
+            transitionContext.completeTransition(false)
+            return
+        }
+       
+        // Get frame of selected recipe
+        guard let frame = detailView.cellFrame else {
+            transitionContext.completeTransition(false)
+            return
+        }
+        
         let duration = transitionDuration(using: transitionContext)
 
-        UIView.animate(withDuration: duration) {
+        UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 2.5, options: [], animations: {
+            // Scroll to top incase the user scrolls down a bit while in the detail view
+            detailView.scrollView.showsVerticalScrollIndicator = false
+            detailView.scrollView.setContentOffset(CGPoint(x: 0, y: -detailView.scrollView.contentInset.top), animated: true)
+            
             view.layer.cornerRadius = 18
-            view.frame = finalFrame
+            view.frame = frame
+             
+            detailView.recipeCardContentViewWidthAnchor.constant = frame.width
+            detailView.recipeCardContentViewHeightConstraint.constant = frame.height
+            detailView.closeButton.alpha = 0.0
+            
+            detailView.recipeCardContentView.layoutIfNeeded()
+            detailView.view.layoutIfNeeded()
+        }) { (completed) in
+            transitionContext.completeTransition(true)
         }
     }
 }

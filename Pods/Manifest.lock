@@ -14,29 +14,21 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
-  - Alamofire (4.9.1)
   - Clarifai (2.3.2):
     - AFNetworking (~> 3.1)
-  - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
-  - Alamofire
   - Clarifai
-  - SwiftyJSON
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
-    - Alamofire
     - Clarifai
-    - SwiftyJSON
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
-  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   Clarifai: 6d6cce2b31aefcf33893f2c3a18588b266771d11
-  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 7a428837d6d9d1b089bb5aa329ac83f0129383d4
+PODFILE CHECKSUM: 07e0104e71985b84ae64a056cccd0f323f2cd08c
 
 COCOAPODS: 1.7.5

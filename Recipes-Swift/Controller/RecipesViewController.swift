@@ -68,6 +68,16 @@ class RecipesViewController: UIViewController {
         let recipesContentSize = recipesTableView.contentSize.height
         recipesTableViewHeightConstraint.constant = recipesContentSize
     }
+    
+    // MARK: - Close
+    @IBAction func close(_ sender: Any) {
+        // TODO: - Maybe have an alert asking if the user really wants to leave, just in case it was an accident
+        
+        // Empty recipes found
+        Recipes.sharedInstance.recipes.removeAll()
+        
+        self.navigationController?.popToRootViewController(animated: true)
+    }
 }
 
 extension RecipesViewController: UITableViewDelegate, UITableViewDataSource {
@@ -82,9 +92,7 @@ extension RecipesViewController: UITableViewDelegate, UITableViewDataSource {
         let recipe = Recipes.sharedInstance.recipes[indexPath.row]
         cell.recipeContentView.recipe = recipe
         cell.recipeContentView.updateContent()
-        
-        print(recipe.extendedIngredients?.first?.name ?? "Boobs")
-        
+                
         cell.contentView.autoresizingMask = .flexibleHeight
         
         // Needs to be on the main thread or contentSize will be inaccurate sometimes
@@ -96,33 +104,43 @@ extension RecipesViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let destinationVC = storyboard?.instantiateViewController(withIdentifier: "recipeDetailView") as? RecipeDetailViewController else {
-            return
-        }
-        
         // Assign "small" frame to view controller
         let cell = tableView.cellForRow(at: indexPath) as! RecipeTableViewCell
-
-        // Relative frame for recipe box
-        let recipeBoxFrame = cell.recipeContentView.frame
-        let recipeBoxRelativeToTableViewFrame = tableView.convert(recipeBoxFrame, from: cell)
-
-        // Send frame information
-        destinationVC.cellFrame = self.view.convert(recipeBoxRelativeToTableViewFrame, from: tableView)
         
-        // Freeze highlighted state (or else it will bounce back)
-        // At this point, the cell will be "inwards"
-        cell.freezeAnimations()
-        cell.contentView.isHidden = true    // TODO: - This sometimes causes a flicker due to a delay between hiding the cell and displaying the matching destination VC, explore possible solutions
+        cell.animate(isHighlighted: true) { (success) in
+            // Relative frame for recipe box
+            let currentFrame = cell.recipeContentView.frame
+            
+            // Calculate original frame
+            let originalSize = CGSize(width: currentFrame.width * (100/94), height: currentFrame.height * (100/94))
+            
+            let widthDifference = originalSize.width - currentFrame.width
+            let heightDifference = originalSize.height - currentFrame.height
+            
+            let originalOrigin = CGPoint(x: currentFrame.origin.x - (widthDifference / 2), y: currentFrame.origin.y - (heightDifference / 2))
+            
+            let recipeBoxRelativeToCellFrame = CGRect(origin: originalOrigin, size: originalSize)
+            let recipeBoxRelativeToTableViewFrame = tableView.convert(recipeBoxRelativeToCellFrame, from: cell)
+            let recipeBoxFrame = self.view.convert(recipeBoxRelativeToTableViewFrame, from: tableView)
+            
+            guard let destinationVC = self.storyboard?.instantiateViewController(withIdentifier: "recipeDetailView") as? RecipeDetailViewController else {
+                return
+            }
 
-        // Send content
-        destinationVC.recipe = cell.recipeContentView.recipe
-        destinationVC.updateCard()
-
-        destinationVC.modalPresentationStyle = .fullScreen
-        present(destinationVC, animated: true) {
-            cell.contentView.isHidden = false
-            cell.unfreezeAnimations()
+            // Send frame information
+            // This is the original frame fof the cell, when it is untransformed (shrinked from tap)
+            destinationVC.cellFrame = recipeBoxFrame
+            
+            // Send content
+            destinationVC.recipe = cell.recipeContentView.recipe
+            destinationVC.updateCard()
+                    
+            destinationVC.modalPresentationStyle = .fullScreen
+            
+            // Give time for touches began animation to finish
+            self.present(destinationVC, animated: true, completion: {
+                cell.animate(isHighlighted: false)
+            })
         }
     }
 }

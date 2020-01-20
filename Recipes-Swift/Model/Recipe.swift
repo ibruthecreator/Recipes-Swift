@@ -6,7 +6,7 @@
 //  Copyright © 2020 Mohammed Ibrahim. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Recipe: Codable {
     var id: Int          // ID of the recipe

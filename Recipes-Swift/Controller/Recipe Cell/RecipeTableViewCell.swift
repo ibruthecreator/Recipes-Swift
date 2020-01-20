@@ -12,6 +12,8 @@ class RecipeTableViewCell: UITableViewCell {
     
     // MARK: - Outlets
     @IBOutlet weak var recipeContentView: RecipeContentView!
+    
+    var originalContentViewFrame: CGRect = .zero
         
     var disabledHighlightedAnimation = false
 
@@ -37,27 +39,26 @@ class RecipeTableViewCell: UITableViewCell {
         // Since background view doesn't mask to bounds (in order to show shadows), we have to apply the corner radius to the image seperately
     }
     
-    // MARK: - Freeze Animations
+    // MARK: - Freeze/Unfreeze Animations
     func freezeAnimations() {
-        animate(isHighlighted: true)
         disabledHighlightedAnimation = true
         layer.removeAllAnimations()
     }
 
     func unfreezeAnimations() {
         disabledHighlightedAnimation = false
-        animate(isHighlighted: false)
     }
     
-    // Make it appears very responsive to touch when you hold on it
+    // Make it appears very responsive to touch
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
+        originalContentViewFrame = self.recipeContentView.frame
+        
         animate(isHighlighted: true)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-        animate(isHighlighted: false)
     }
 
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -65,30 +66,29 @@ class RecipeTableViewCell: UITableViewCell {
         animate(isHighlighted: false)
     }
     
-    // MARK: - Cell Bounce On Hold Animation
+    // MARK: - Cell Highlighted Frame
     func animate(isHighlighted: Bool, completion: ((Bool) -> Void)?=nil) {
-           if disabledHighlightedAnimation {
-               return
-           }
-        let animationOptions: UIView.AnimationOptions = true
-           ? [.allowUserInteraction] : []
-           if isHighlighted {
-               UIView.animate(withDuration: 0.5,
-                              delay: 0,
-                              usingSpringWithDamping: 1,
-                              initialSpringVelocity: 0,
-                              options: animationOptions, animations: {
-                                self.transform = .init(scaleX: 0.94, y: 0.94)   // Bounce inwards
-               }, completion: completion)
-           } else {
-               UIView.animate(withDuration: 0.5,
-                              delay: 0,
-                              usingSpringWithDamping: 1,
-                              initialSpringVelocity: 0,
-                              options: animationOptions, animations: {
-                               self.transform = .identity
-               }, completion: completion)
-           }
-       }
+        if disabledHighlightedAnimation {
+            return
+        }
+        let animationOptions: UIView.AnimationOptions = [.allowUserInteraction]
+        if isHighlighted {
+            UIView.animate(withDuration: 0.5,
+                           delay: 0,
+                           usingSpringWithDamping: 1,
+                           initialSpringVelocity: 0,
+                           options: animationOptions, animations: {
+                            self.transform = .init(scaleX: 0.94, y: 0.94)
+            }, completion: completion)
+        } else {
+            UIView.animate(withDuration: 0.5,
+                           delay: 0,
+                           usingSpringWithDamping: 1,
+                           initialSpringVelocity: 0,
+                           options: animationOptions, animations: {
+                            self.transform = .identity
+            }, completion: completion)
+        }
+    }
 }
 

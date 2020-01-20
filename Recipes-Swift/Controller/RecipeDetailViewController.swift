@@ -19,14 +19,16 @@ class RecipeDetailViewController: UIViewController {
     @IBOutlet weak var recipeCardContentViewTrailingAnchor: NSLayoutConstraint!
     @IBOutlet weak var recipeCardContentViewLeadingAnchor: NSLayoutConstraint!
     
-    @IBOutlet weak var quickInformationTableView: UITableView!
-    @IBOutlet weak var quickInformationTableViewHeightAnchor: NSLayoutConstraint!
+    @IBOutlet weak var ingredientsTableView: UITableView!
+    @IBOutlet weak var ingredientsTableViewHeightAnchor: NSLayoutConstraint!
     
     @IBOutlet weak var cookingPreparingStackView: UIStackView!
     @IBOutlet weak var cookingTimeLabel: UILabel!
     @IBOutlet weak var preparingTimeLabel: UILabel!
     
     @IBOutlet weak var viewRecipeButton: UIButton!
+    
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var cellFrame: CGRect?
     var recipe: Recipe?
@@ -48,8 +50,8 @@ class RecipeDetailViewController: UIViewController {
         viewRecipeButton.layer.cornerRadius = 8
         viewRecipeButton.backgroundColor = UIColor.Theme.green
         
-        quickInformationTableView.rowHeight = UITableView.automaticDimension
-        quickInformationTableView.estimatedRowHeight = 42.5
+        ingredientsTableView.rowHeight = UITableView.automaticDimension
+        ingredientsTableView.estimatedRowHeight = 42.5
     }
     
     // Hide status bar for this VC alone
@@ -71,13 +73,13 @@ class RecipeDetailViewController: UIViewController {
     // MARK: - Update Detail Content
     func updateDetailContent() {
         if let cookingTime = recipe?.cookingMinutes {
-            cookingTimeLabel.text = "\(cookingTime) MINS"
+            cookingTimeLabel.text = "\(cookingTime) mins"
         } else {
             cookingTimeLabel.text = "N/A"
         }
         
         if let preparingTime = recipe?.preparationMinutes {
-            preparingTimeLabel.text = "\(preparingTime) MINS"
+            preparingTimeLabel.text = "\(preparingTime) mins"
         } else {
             preparingTimeLabel.text = "N/A"
         }
@@ -112,6 +114,14 @@ class RecipeDetailViewController: UIViewController {
         
         present(alert, animated: true, completion: nil)
     }
+    
+    // MARK: - Layout Table Views
+    func layoutTableViews() {
+        let ingredientsTableViewContentSize = ingredientsTableView.contentSize.height
+        ingredientsTableViewHeightAnchor.constant = ingredientsTableViewContentSize
+        
+        self.view.layoutIfNeeded()  // Flush changes
+    }
 }
 
 // MARK: - Table View Delegate Methods
@@ -121,7 +131,17 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientCell", for: indexPath) as! ingredientTableViewCell
+        
+        cell.ingredient = self.recipe?.extendedIngredients?[indexPath.row]
+        cell.updateContent()
+        
+        // Needs to be on the main thread or contentSize will be inaccurate sometimes
+        DispatchQueue.main.async {
+            self.layoutTableViews()
+        }
+    
+        return cell
     }
 }
 
@@ -130,7 +150,7 @@ extension RecipeDetailViewController: UIViewControllerTransitioningDelegate {
         return AnimationController(animationDuration: 0.5, animationType: .present)
     }
     
-//    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        return AnimationController(animationDuration: 0.4, animationType: .dismiss)
-//    }
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return AnimationController(animationDuration: 0.7, animationType: .dismiss)
+    }
 }

@@ -6,9 +6,7 @@
 //  Copyright © 2020 Mohammed Ibrahim. All rights reserved.
 //
 
-import Foundation
-import Alamofire
-import SwiftyJSON
+import UIKit    // UIKit only for UIImage type below
 
 class Recipes {
     static let sharedInstance = Recipes()
@@ -21,6 +19,9 @@ class Recipes {
     // Fixed parameters - everything except ingredients
     let apiKey = "7845152a156345c9b7ffb9ea93a0b4ae"
     
+    // Store images for cache, prevents flickering in transition
+    let imageCache = NSCache<NSString, UIImage>()
+    
     // MARK: - Fetch Recipes
     // This only gets information such as title, image, and the sorts
     // While this is sufficient, we need more details for each recipe in the case that the user clicks for more information
@@ -32,25 +33,21 @@ class Recipes {
         let query = "?apiKey=\(apiKey)&ingredients=\(allIngredients)&number=5&ranking=1&ignorePantry=true"
         
         if let url = URL(string: findByIngredientsEndpoint + query) {
-            do {
-                let request = try URLRequest(url: url, method: .get)
-                
-                URLSession.shared.dataTask(with: request) { (data, response, error) in
-                    if let data = data {
-                        do {
-                            let recipes = try JSONDecoder().decode([Recipe].self, from: data)
-                            
-                            self.fetchAllRecipeInformation(recipes: recipes) { (success) in
-                                completion(true)
-                            }
-                        } catch let error {
-                            print(error)
+            let request = URLRequest(url: url)
+            
+            URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let data = data {
+                    do {
+                        let recipes = try JSONDecoder().decode([Recipe].self, from: data)
+                        
+                        self.fetchAllRecipeInformation(recipes: recipes) { (success) in
+                            completion(true)
                         }
+                    } catch let error {
+                        print(error)
                     }
-                }.resume()
-            } catch {
-                print(error)
-            }
+                }
+            }.resume()
         }
     }
     
@@ -66,25 +63,50 @@ class Recipes {
         let query = "?apiKey=\(apiKey)&ids=\(recipeIDsQuery)"
         
         if let url = URL(string: informationBulkEndpoint + query) {
-            do {
-                let request = try URLRequest(url: url, method: .get)
-                
-                URLSession.shared.dataTask(with: request) { (data, response, error) in
-                    if let data = data {
-                        print("data")
-                        do {
-                            let recipesWithDetail = try JSONDecoder().decode([Recipe].self, from: data)
-                            self.recipes = recipesWithDetail
-                            
-                            completion(true)
-                        } catch let error {
-                            print(error)
-                        }
+            let request = URLRequest(url: url)
+            
+            URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let data = data {
+                    print("data")
+                    do {
+                        let recipesWithDetail = try JSONDecoder().decode([Recipe].self, from: data)
+                        self.recipes = recipesWithDetail
+                        
+                        completion(true)
+                    } catch let error {
+                        print(error)
                     }
-                }.resume()
-            } catch {
-                print(error)
-            }
+                }
+            }.resume()
+        }
+    }
+    
+    
+    func downloadImage(from link: String, completion: @escaping (_ image: UIImage) -> () = {_ in } ) {
+        guard let url = URL(string: link) else {
+            // URL error
+            return
+        }
+        
+        // Try to see if image has already been cached
+        if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
+            completion(cachedImage)
+        } else {
+            URLSession.shared.dataTask(with: url) { (data, response, error) in
+                guard let httpURLResponse = response as? HTTPURLResponse,
+                      httpURLResponse.statusCode == 200, error == nil,
+                      let data = data,
+                      let image = UIImage(data: data) else {
+                        return // Error
+                }
+                
+                // If not already cached, cache now for easy retrieval later
+                self.imageCache.setObject(image, forKey: url.absoluteString as NSString)
+
+                DispatchQueue.main.async {
+                    completion(image)
+                }
+            }.resume()
         }
     }
 }

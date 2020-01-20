@@ -22,6 +22,7 @@ import UIKit
     @IBOutlet weak var labelTrailingAnchor: NSLayoutConstraint!
 
     var recipe: Recipe?
+    var image: UIImage?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -57,13 +58,18 @@ import UIKit
         self.layer.shadowRadius = 18
     }
     
-    func updateContent() {
+    func updateContent(includingImage: Bool = true) {
         if let recipe = recipe {
-            recipeImageView.download(from: recipe.displayImage)
+            if includingImage {
+                Recipes.sharedInstance.downloadImage(from: recipe.displayImage) { (image) in
+                    self.recipeImageView.image = image
+                }
+            }
+            
             sourceLabel.text = recipe.sourceName
             
             if recipe.vegetarian ?? false {
-                recipeNameLabel.text = "🌱 \(recipe.title)"
+                recipeNameLabel.text = "🌱 \(recipe.title.capitalized)"
                 return
             }
             

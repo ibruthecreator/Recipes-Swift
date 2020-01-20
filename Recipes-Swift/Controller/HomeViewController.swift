@@ -35,7 +35,9 @@ class HomeViewController: UIViewController {
         
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
-        
+        flowLayout.minimumLineSpacing = .zero
+        flowLayout.minimumInteritemSpacing = .zero
+
         onboardingCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         onboardingCollectionView.collectionViewLayout = flowLayout
         
