@@ -45,6 +45,7 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
                 presentAnimation(with: transitionContext, viewToAnimate: toViewController.view)
                 
             case .dismiss:
+                // Need to add both otherwise the background will be black until the animation ends
                 transitionContext.containerView.addSubview(toViewController.view)
                 transitionContext.containerView.addSubview(fromViewController.view)
                 dismissAnimation(with: transitionContext, viewToAnimate: fromViewController.view)

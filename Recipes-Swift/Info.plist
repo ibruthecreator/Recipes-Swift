@@ -64,5 +64,7 @@
 	<array>
 		<string>NewYorkExtraLarge-Bold.otf</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>
