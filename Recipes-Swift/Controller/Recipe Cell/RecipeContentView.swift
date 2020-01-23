@@ -58,6 +58,7 @@ import UIKit
         self.layer.shadowRadius = 18
     }
     
+    // MARK: - Update Content
     func updateContent(includingImage: Bool = true) {
         if let recipe = recipe {
             if includingImage {

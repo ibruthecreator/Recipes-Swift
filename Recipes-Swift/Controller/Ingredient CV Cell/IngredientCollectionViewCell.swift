@@ -36,7 +36,7 @@ class IngredientCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Update Label
     func updateLabel() {
-        ingredientLabel.text = ingredient?.capitalizeFirstLetter() ?? "Ingredient"
+        ingredientLabel.text = ingredient?.capitalized ?? "Ingredient"
     }
     
     // MARK: - Add Button

@@ -35,8 +35,6 @@ class RecipeTableViewCell: UITableViewCell {
         self.contentView.layer.masksToBounds = false
         self.layer.masksToBounds = false
         self.backgroundColor = UIColor.clear
-        
-        // Since background view doesn't mask to bounds (in order to show shadows), we have to apply the corner radius to the image seperately
     }
     
     // MARK: - Freeze/Unfreeze Animations
