@@ -15,3 +15,8 @@ Therefore, I have to make do with what I have.
 Find all screenshots and a demo video here: https://drive.google.com/open?id=1KDUkpjlJqEz7NHJqWg585HpfEcoGOjRx
 
 ![Home](./Screenshots/home.png "Home")
+![Home - Second Slide](./Screenshots/home2.png "Home - Second Slide")
+![Home - Third Slide](./Screenshots/home3.png "Home - Third Slide")
+![Scanner](./Screenshots/scanner.png "Scanner")
+![Results](./Screenshots/results.png "Results")
+![Recipe Detail](./Screenshots/recipe2.png "Recipe Detail")

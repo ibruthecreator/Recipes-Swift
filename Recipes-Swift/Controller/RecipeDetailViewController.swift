@@ -131,7 +131,7 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientCell", for: indexPath) as! ingredientTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientCell", for: indexPath) as! IngredientTableViewCell
         
         cell.ingredient = self.recipe?.extendedIngredients?[indexPath.row]
         cell.updateContent()

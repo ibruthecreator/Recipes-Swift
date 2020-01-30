@@ -25,6 +25,7 @@
 		107B0A2523BA8F44004105BD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107B0A2423BA8F43004105BD /* HomeViewController.swift */; };
 		107B0A2823BA9051004105BD /* NewYorkExtraLarge-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 107B0A2723BA9050004105BD /* NewYorkExtraLarge-Bold.otf */; };
 		107B0A2B23BA9966004105BD /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107B0A2A23BA9966004105BD /* OnboardingCollectionViewCell.swift */; };
+		1080936623E28C11000309FF /* IngredientTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1080936523E28C11000309FF /* IngredientTableViewCell.swift */; };
 		108C6B0823B6B388008E9724 /* IngredientScanningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C6B0723B6B388008E9724 /* IngredientScanningViewController.swift */; };
 		108C6B0B23B6B769008E9724 /* UIColor+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C6B0A23B6B769008E9724 /* UIColor+Theme.swift */; };
 		108C6B0D23B6CEE1008E9724 /* UIButton+EnableDisable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C6B0C23B6CEE1008E9724 /* UIButton+EnableDisable.swift */; };
@@ -41,7 +42,6 @@
 		10B1F67523BD799A005A5440 /* Recipes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B1F67423BD799A005A5440 /* Recipes.swift */; };
 		10B1F67723BE9EEB005A5440 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B1F67623BE9EEB005A5440 /* Recipe.swift */; };
 		10B1F67B23BEA245005A5440 /* RecipeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B1F67923BEA245005A5440 /* RecipeTableViewCell.swift */; };
-		10B688C523D51F810012171F /* ingredientTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B688C423D51F800012171F /* ingredientTableViewCell.swift */; };
 		461D6236B4A66D37E1881E39 /* Pods_Recipes_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E1F34152C908E609769BED /* Pods_Recipes_Swift.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +66,7 @@
 		107B0A2423BA8F43004105BD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		107B0A2723BA9050004105BD /* NewYorkExtraLarge-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NewYorkExtraLarge-Bold.otf"; sourceTree = "<group>"; };
 		107B0A2A23BA9966004105BD /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
+		1080936523E28C11000309FF /* IngredientTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientTableViewCell.swift; sourceTree = "<group>"; };
 		108C6B0723B6B388008E9724 /* IngredientScanningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientScanningViewController.swift; sourceTree = "<group>"; };
 		108C6B0A23B6B769008E9724 /* UIColor+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Theme.swift"; sourceTree = "<group>"; };
 		108C6B0C23B6CEE1008E9724 /* UIButton+EnableDisable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+EnableDisable.swift"; sourceTree = "<group>"; };
@@ -82,7 +83,6 @@
 		10B1F67423BD799A005A5440 /* Recipes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipes.swift; sourceTree = "<group>"; };
 		10B1F67623BE9EEB005A5440 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		10B1F67923BEA245005A5440 /* RecipeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTableViewCell.swift; sourceTree = "<group>"; };
-		10B688C423D51F800012171F /* ingredientTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ingredientTableViewCell.swift; sourceTree = "<group>"; };
 		290B963B6A570035BE02E10C /* Pods-Recipes-Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Recipes-Swift.release.xcconfig"; path = "Target Support Files/Pods-Recipes-Swift/Pods-Recipes-Swift.release.xcconfig"; sourceTree = "<group>"; };
 		52E1F34152C908E609769BED /* Pods_Recipes_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Recipes_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA15A84404C55F49123BA79F /* Pods-Recipes-Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Recipes-Swift.debug.xcconfig"; path = "Target Support Files/Pods-Recipes-Swift/Pods-Recipes-Swift.debug.xcconfig"; sourceTree = "<group>"; };
@@ -157,7 +157,7 @@
 				107B0A1F23B944A2004105BD /* Protocols */,
 				107B0A1A23B93AB8004105BD /* Basket Cell */,
 				108C6B1323B6D8D4008E9724 /* Ingredient CV Cell */,
-				10B688C323D51F380012171F /* Ingredient TV Cell */,
+				1080936423E28BF5000309FF /* Ingredient TV Cell */,
 				107B0A2923BA994D004105BD /* Onboarding Cell */,
 				10B1F67823BEA232005A5440 /* Recipe Cell */,
 				108C6B1023B6D388008E9724 /* Networking */,
@@ -206,6 +206,14 @@
 			path = "Onboarding Cell";
 			sourceTree = "<group>";
 		};
+		1080936423E28BF5000309FF /* Ingredient TV Cell */ = {
+			isa = PBXGroup;
+			children = (
+				1080936523E28C11000309FF /* IngredientTableViewCell.swift */,
+			);
+			path = "Ingredient TV Cell";
+			sourceTree = "<group>";
+		};
 		108C6B0923B6B751008E9724 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,8 +241,8 @@
 		108C6B1323B6D8D4008E9724 /* Ingredient CV Cell */ = {
 			isa = PBXGroup;
 			children = (
-				108C6B1423B6D8EF008E9724 /* IngredientCollectionViewCell.swift */,
 				108C6B1523B6D8EF008E9724 /* IngredientCollectionViewCell.xib */,
+				108C6B1423B6D8EF008E9724 /* IngredientCollectionViewCell.swift */,
 			);
 			path = "Ingredient CV Cell";
 			sourceTree = "<group>";
@@ -255,15 +263,6 @@
 				1001495123CFB78E0087D746 /* RecipeContentView.xib */,
 			);
 			path = "Recipe Cell";
-			sourceTree = "<group>";
-		};
-		10B688C323D51F380012171F /* Ingredient TV Cell */ = {
-			isa = PBXGroup;
-			children = (
-				10B688C423D51F800012171F /* ingredientTableViewCell.swift */,
-			);
-			name = "Ingredient TV Cell";
-			path = ../..;
 			sourceTree = "<group>";
 		};
 		657A88D0D7FEDF2D2B890055 /* Frameworks */ = {
@@ -417,8 +416,8 @@
 				1001495823D236960087D746 /* UIViewController+BlurStatusBar.swift in Sources */,
 				10A853DE23CA7C9C008FB36F /* RecipeDetailViewController.swift in Sources */,
 				107B0A2523BA8F44004105BD /* HomeViewController.swift in Sources */,
-				10B688C523D51F810012171F /* ingredientTableViewCell.swift in Sources */,
 				108C6B1223B6D3BB008E9724 /* Prediction.swift in Sources */,
+				1080936623E28C11000309FF /* IngredientTableViewCell.swift in Sources */,
 				107B0A1D23B93B3A004105BD /* BasketCollectionViewCell.swift in Sources */,
 				10B1F67323BD5BC6005A5440 /* RecipesViewController.swift in Sources */,
 				1001495023CFB77E0087D746 /* RecipeContentView.swift in Sources */,

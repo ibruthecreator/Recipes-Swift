@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ingredientTableViewCell: UITableViewCell {
+class IngredientTableViewCell: UITableViewCell {
     
     var ingredient: ExtendedIngredient?
     
