@@ -12,4 +12,6 @@ Therefore, I have to make do with what I have.
 
 
 ## Screenshots and Demo Video
-Find screenshots and a demo video here: https://drive.google.com/open?id=1KDUkpjlJqEz7NHJqWg585HpfEcoGOjRx
+Find all screenshots and a demo video here: https://drive.google.com/open?id=1KDUkpjlJqEz7NHJqWg585HpfEcoGOjRx
+
+![Home](./Screenshots/home.png "Home")
