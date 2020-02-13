@@ -50,7 +50,7 @@ class HomeViewController: UIViewController {
     // MARK: - Start Button
     @IBAction func startScanningButtonWasPressed(_ sender: Any) {
         #if targetEnvironment(simulator)
-            let errorAlert = UIAlertController(title: "App must be used on a real device", message: "Since this app makes use of the built-in camera on an iPhone, it must be run on a real device and not in the simulator.\n\nAlso, in the case that this is a Shopify engineer using this, 👋.", preferredStyle: .alert)
+            let errorAlert = UIAlertController(title: "App must be used on a real device", message: "Since this app makes use of the built-in camera on an iPhone, it must be run on a real device and not in the simulator.\n\nAlso, in the case that this is a PagerDuty engineer using this, 👋.", preferredStyle: .alert)
             let dismissAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
             errorAlert.addAction(dismissAction)
             present(errorAlert, animated: true, completion: nil)
