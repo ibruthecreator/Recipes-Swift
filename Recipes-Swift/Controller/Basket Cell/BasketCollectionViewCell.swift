@@ -36,18 +36,18 @@ class BasketCollectionViewCell: UICollectionViewCell {
         ingredientLabel.text = ingredient?.capitalized ?? "Ingredient"
     }
     
-    // MARK: - Flash Green
+    // MARK: - Flash Black
     // Just an indicator to show that this ingredient was just added,
     // This makes it more visible in the case that it was added by accident and also as a way to provide feedback to the user after adding
-    func flashGreen() {
-        let greenView = UIView(frame: self.frame)
-        greenView.backgroundColor = UIColor.Theme.green
+    func flashWhite() {
+        let blackView = UIView(frame: self.frame)
+        blackView.backgroundColor = UIColor.black
         
-        self.addSubview(greenView)
-        sendSubviewToBack(greenView)
+        self.addSubview(blackView)
+        sendSubviewToBack(blackView)
         
         // Fade out after one second
-        greenView.fadeOut(withDelay: 1.5)
+        blackView.fadeOut(withDelay: 1.5)
     }
     
     // MARK: - Remove From Basket
@@ -59,9 +59,12 @@ class BasketCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - Make Display
-    // Disables delete button and makes background green
+    // Disables delete button
     func makeDisplayOnly() {
         deleteButton.isEnabled = true
         deleteButton.isHidden = true
+        
+        self.backgroundColor = UIColor.black
+        self.ingredientLabel.textColor = UIColor.white
     }
 }

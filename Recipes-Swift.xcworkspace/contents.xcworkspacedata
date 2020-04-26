@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Recipes-Swift.xcodeproj">
+      location = "group:/Users/mohammed/Desktop/Quarantine-Chef/Quarantine-Chef.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

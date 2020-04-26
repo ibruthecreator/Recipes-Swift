@@ -171,7 +171,7 @@
 		6F1CDAD8E6C9BB6D58C3990A53FE3C3D /* ClarifaiSearchResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiSearchResult.h; path = Clarifai/Classes/ClarifaiSearchResult.h; sourceTree = "<group>"; };
 		7643C7EEFED4C5E56A85CF64C9B09AA9 /* ClarifaiModelVersion.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiModelVersion.m; path = Clarifai/Classes/ClarifaiModelVersion.m; sourceTree = "<group>"; };
 		7AC66F3B348F8B165453B131F6E0BFEC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
-		82CEBB43DA6121806871FF24D7411891 /* Clarifai.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Clarifai.framework; path = Clarifai.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82CEBB43DA6121806871FF24D7411891 /* Clarifai.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Clarifai.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		838779FB9F204BA94802EF32EEDD77C3 /* Pods-Recipes-Swift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Recipes-Swift-dummy.m"; sourceTree = "<group>"; };
 		850625F1D177A2697173F383AE9253A3 /* ClarifaiInput.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiInput.m; path = Clarifai/Classes/ClarifaiInput.m; sourceTree = "<group>"; };
 		86F0987C5F6A3E7E1F61A44A64042967 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFNetworkActivityIndicatorManager.m; path = "UIKit+AFNetworking/AFNetworkActivityIndicatorManager.m"; sourceTree = "<group>"; };
@@ -180,13 +180,13 @@
 		8D5848FC04B6BCF0DCDC65A97D3265CE /* AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworking.h; path = AFNetworking/AFNetworking.h; sourceTree = "<group>"; };
 		937A39A932641BD0455BD6023E17AA28 /* ClarifaiApp.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiApp.m; path = Clarifai/Classes/ClarifaiApp.m; sourceTree = "<group>"; };
 		956EC6690D9789846A943FCB9AACF304 /* ClarifaiOutputFace.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiOutputFace.h; path = Clarifai/Classes/ClarifaiOutputFace.h; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9F897039D96A6A302BB7CE6F0439855A /* Pods_Recipes_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Recipes_Swift.framework; path = "Pods-Recipes-Swift.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9F897039D96A6A302BB7CE6F0439855A /* Pods_Recipes_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Recipes_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0A13CBD1BCB5B1A6C80DA0B8CF1782F /* NSArray+Clarifai.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+Clarifai.m"; path = "Clarifai/Classes/NSArray+Clarifai.m"; sourceTree = "<group>"; };
 		A47D7F2B37D028692041663BA35859DD /* ClarifaiLocation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiLocation.m; path = Clarifai/Classes/ClarifaiLocation.m; sourceTree = "<group>"; };
 		A4AD06AFD317BA0474FF7670C6765FF0 /* ResponseSerializer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ResponseSerializer.m; path = Clarifai/Classes/ResponseSerializer.m; sourceTree = "<group>"; };
 		A4EBB21CCA845637D8BB859951F90462 /* UIButton+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIButton+AFNetworking.h"; path = "UIKit+AFNetworking/UIButton+AFNetworking.h"; sourceTree = "<group>"; };
-		A4FA15D44DF6BAC7550EDEED10862AA3 /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = AFNetworking.framework; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4FA15D44DF6BAC7550EDEED10862AA3 /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABA1A132AA91A6566E12A7D7BBA54C02 /* Clarifai-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Clarifai-Info.plist"; sourceTree = "<group>"; };
 		AD723D4AC1E4CF206542F2E19D790E0D /* NSArray+Clarifai.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSArray+Clarifai.h"; path = "Clarifai/Classes/NSArray+Clarifai.h"; sourceTree = "<group>"; };
 		AE17895C193C711595B8F16577A0624D /* ClarifaiSearchTerm.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiSearchTerm.m; path = Clarifai/Classes/ClarifaiSearchTerm.m; sourceTree = "<group>"; };
@@ -307,7 +307,6 @@
 				A4AD06AFD317BA0474FF7670C6765FF0 /* ResponseSerializer.m */,
 				3DBB23F1EE7BB76A7EE75E8DA5B0D727 /* Support Files */,
 			);
-			name = Clarifai;
 			path = Clarifai;
 			sourceTree = "<group>";
 		};
@@ -473,7 +472,6 @@
 				C0FA5E0E7363C0E362408D3831E35AEC /* Support Files */,
 				A4975413A03C241A4D3EE0C6CF27A8A1 /* UIKit */,
 			);
-			name = AFNetworking;
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
@@ -629,6 +627,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
 			productRefGroup = 98EFBEBBEC5AEA260BF2D7AE7F33A35E /* Products */;
@@ -850,12 +849,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 197580B0DF44B01ADC9A465EC6AB5ECB /* AFNetworking.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -871,6 +873,8 @@
 				MODULEMAP_FILE = "Target Support Files/AFNetworking/AFNetworking.modulemap";
 				PRODUCT_MODULE_NAME = AFNetworking;
 				PRODUCT_NAME = AFNetworking;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
@@ -922,12 +926,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 197580B0DF44B01ADC9A465EC6AB5ECB /* AFNetworking.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -943,6 +950,8 @@
 				MODULEMAP_FILE = "Target Support Files/AFNetworking/AFNetworking.modulemap";
 				PRODUCT_MODULE_NAME = AFNetworking;
 				PRODUCT_NAME = AFNetworking;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";

@@ -48,7 +48,6 @@ class RecipeDetailViewController: UIViewController {
         closeButton.makeCircular()
         
         viewRecipeButton.layer.cornerRadius = 8
-        viewRecipeButton.backgroundColor = UIColor.Theme.green
         
         ingredientsTableView.rowHeight = UITableView.automaticDimension
         ingredientsTableView.estimatedRowHeight = 42.5

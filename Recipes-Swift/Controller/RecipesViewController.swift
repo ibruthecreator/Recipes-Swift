@@ -172,8 +172,6 @@ extension RecipesViewController: UICollectionViewDelegate, UICollectionViewDataS
         let ingredient = Prediction.sharedInstance.basket[indexPath.row]
         cell.ingredient = ingredient
         cell.updateLabel()
-
-        cell.backgroundColor = UIColor.Theme.green
         
         cell.makeDisplayOnly()
         

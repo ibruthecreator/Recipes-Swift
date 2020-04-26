@@ -12,9 +12,13 @@ class Recipes {
     static let sharedInstance = Recipes()
     
     var recipes: [Recipe] = []
+    var autocompleteIngredients: [Ingredient] = []
 
     let findByIngredientsEndpoint = "https://api.spoonacular.com/recipes/findByIngredients"
     let informationBulkEndpoint = "https://api.spoonacular.com/recipes/informationBulk"
+    let autocompleteIngredientEndpoint = "https://api.spoonacular.com/food/ingredients/autocomplete"
+    
+    let ingredientImageURL = "https://spoonacular.com/cdn/ingredients_500x500/"
 
     // Fixed parameters - everything except ingredients
     let apiKey = "7845152a156345c9b7ffb9ea93a0b4ae"
@@ -52,7 +56,7 @@ class Recipes {
     }
     
     // MARK: - Fetch Recipe Information
-    func fetchAllRecipeInformation(recipes: [Recipe], completion: @escaping (_ sucess: Bool) -> ()) {
+    func fetchAllRecipeInformation(recipes: [Recipe], completion: @escaping (_ success: Bool) -> ()) {
         var recipeIDs: [String] = []
         
         for recipe in recipes {
@@ -67,7 +71,6 @@ class Recipes {
             
             URLSession.shared.dataTask(with: request) { (data, response, error) in
                 if let data = data {
-                    print("data")
                     do {
                         let recipesWithDetail = try JSONDecoder().decode([Recipe].self, from: data)
                         self.recipes = recipesWithDetail
@@ -81,9 +84,43 @@ class Recipes {
         }
     }
     
+    // MARK: - Fetch Auto Complete Results for Recipes
+    func autocompleteIngredients(from text: String, limit: Int = 8, completion: @escaping (_ success: Bool) -> ()) {
+        let query = "?apiKey=\(apiKey)&query=\(text)&number=\(limit)"
+        self.autocompleteIngredients.removeAll()
+        
+        if let url = URL(string: autocompleteIngredientEndpoint + query) {
+            print(autocompleteIngredientEndpoint + query)
+            
+            let request = URLRequest(url: url)
+            
+            URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let data = data {
+                    do {
+                        let ingredients = try JSONDecoder().decode([Ingredient].self, from: data)
+                        self.autocompleteIngredients = ingredients
+                        
+                        completion(true)
+                    } catch let error {
+                        print(error)
+                        completion(false)
+                    }
+                } else {
+                    print("fail")
+                }
+            }
+        }
+    }
     
-    func downloadImage(from link: String, completion: @escaping (_ image: UIImage) -> () = {_ in } ) {
-        guard let url = URL(string: link) else {
+    /// Downloads a recipe or ingredient image provided by the API, provided a URL, and returns a UIImage
+    /// - Parameters:
+    ///   - imageFile: Name of the file and extension
+    ///   - onlyFileName: Boolean which is true if the provided image file parameter is only the name and extension and false if the provided image file parameter includes the entire email
+    ///   - completion: Returns a UIImage if successful
+    func downloadImage(from link: String, onlyFileName: Bool = false, completion: @escaping (_ image: UIImage) -> () = {_ in } ) {
+        // If its only the file name and extension, add the ingredient image URL to the former end of the URL as this may be an ingredient image.
+        // API only serves file name and extension for ingredient API
+        guard let url = URL(string: onlyFileName ? ingredientImageURL + link : link) else {
             // URL error
             return
         }

@@ -38,8 +38,8 @@ class IngredientScanningViewController: CameraViewController {
         // Exit Button
         exitButton = UIButton(frame: .zero)
         
-        exitButton.backgroundColor = UIColor.Theme.red
-        exitButton.tintColor = UIColor.white
+        exitButton.backgroundColor = UIColor.white
+        exitButton.tintColor = UIColor.black
         exitButton.titleLabel?.font = UIFont.systemFont(ofSize: 21, weight: .semibold)
         exitButton.setImage(UIImage(systemName: "xmark"), for: .normal)
         exitButton.layer.cornerRadius = 8
@@ -58,7 +58,7 @@ class IngredientScanningViewController: CameraViewController {
         // Finish button
         finishButton = UIButton(frame: .zero)
         
-        finishButton.backgroundColor = UIColor.Theme.green
+        finishButton.backgroundColor = UIColor.black
         finishButton.titleLabel?.textColor = .white
         finishButton.titleLabel?.font = UIFont.systemFont(ofSize: 21, weight: .semibold)
         finishButton.setTitle("Continue", for: .normal)
@@ -222,7 +222,7 @@ extension IngredientScanningViewController: UICollectionViewDelegate, UICollecti
             // If this is the first cell, and the ingredient was just added (not deleted + updated)
             // Then add the green flash to indicate it was just added
             if self.justAdded && indexPath.row == 0 {
-                cell.flashGreen()
+                cell.flashWhite()
             }
             
             self.justAdded = false
