@@ -256,6 +256,7 @@ Ingredients</string>
                                 </state>
                                 <connections>
                                     <action selector="startScanningButtonWasPressed:" destination="fBJ-kY-UmW" eventType="touchUpInside" id="Zk6-Pe-3W3"/>
+                                    <segue destination="60N-ea-EB4" kind="show" id="I5h-AM-Gz5"/>
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6Lo-y0-hZN">
@@ -292,8 +293,8 @@ Ingredients</string>
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cyS-Bx-B7O">
-                                                    <rect key="frame" x="76" y="19" width="42" height="32"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cyS-Bx-B7O">
+                                                    <rect key="frame" x="76" y="19" width="167" height="32"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -302,6 +303,7 @@ Ingredients</string>
                                                     <rect key="frame" x="251" y="15" width="103" height="40"/>
                                                     <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="5T9-Ey-bzs"/>
                                                         <constraint firstAttribute="width" constant="103" id="vpQ-8B-fWb"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
@@ -323,12 +325,10 @@ Ingredients</string>
                                             <constraints>
                                                 <constraint firstAttribute="bottomMargin" secondItem="cyS-Bx-B7O" secondAttribute="bottom" constant="8" id="1Mp-u2-YKv"/>
                                                 <constraint firstItem="lYu-g8-vTc" firstAttribute="leading" secondItem="5sq-zU-dux" secondAttribute="leadingMargin" id="9IX-aK-p6X"/>
-                                                <constraint firstItem="DDY-az-UCP" firstAttribute="top" secondItem="5sq-zU-dux" secondAttribute="topMargin" constant="4" id="gSy-bW-m30"/>
                                                 <constraint firstItem="lYu-g8-vTc" firstAttribute="top" secondItem="5sq-zU-dux" secondAttribute="topMargin" id="ih3-xe-teM"/>
                                                 <constraint firstItem="DDY-az-UCP" firstAttribute="trailing" secondItem="5sq-zU-dux" secondAttribute="trailingMargin" id="kbT-Fj-4MA"/>
-                                                <constraint firstItem="lYu-g8-vTc" firstAttribute="bottom" secondItem="5sq-zU-dux" secondAttribute="bottomMargin" id="m2G-eQ-jPb"/>
                                                 <constraint firstItem="cyS-Bx-B7O" firstAttribute="top" secondItem="5sq-zU-dux" secondAttribute="topMargin" constant="8" id="nBJ-q2-29P"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="DDY-az-UCP" secondAttribute="bottom" constant="4" id="oBV-36-Vak"/>
+                                                <constraint firstItem="DDY-az-UCP" firstAttribute="leading" secondItem="cyS-Bx-B7O" secondAttribute="trailing" constant="8" id="nI6-Zn-EaX"/>
                                                 <constraint firstItem="DDY-az-UCP" firstAttribute="centerY" secondItem="5sq-zU-dux" secondAttribute="centerY" id="s2v-Lw-dgR"/>
                                                 <constraint firstItem="cyS-Bx-B7O" firstAttribute="leading" secondItem="lYu-g8-vTc" secondAttribute="trailing" constant="8" id="wIM-OA-I4O"/>
                                             </constraints>
@@ -338,6 +338,23 @@ Ingredients</string>
                                             <outlet property="ingredientImageView" destination="lYu-g8-vTc" id="0Yz-pr-ooR"/>
                                             <outlet property="ingredientNameLabel" destination="cyS-Bx-B7O" id="cS9-kn-mjc"/>
                                         </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="emptyCell" textLabel="sJL-Ak-Szd" rowHeight="70" style="IBUITableViewCellStyleDefault" id="6Kq-8J-U4O">
+                                        <rect key="frame" x="0.0" y="98" width="374" height="70"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6Kq-8J-U4O" id="atg-ah-IrL">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sJL-Ak-Szd">
+                                                    <rect key="frame" x="20" y="0.0" width="334" height="70"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -373,6 +390,7 @@ Ingredients</string>
                     <connections>
                         <outlet property="autocompleteTableView" destination="Bd6-3U-Txt" id="Zsg-Ci-2Vl"/>
                         <outlet property="basketCollectionView" destination="6Lo-y0-hZN" id="TEh-Wk-ECE"/>
+                        <outlet property="continueButton" destination="UtE-q9-ZX2" id="Mvy-WG-G6n"/>
                         <outlet property="searchTextField" destination="X59-WO-X9O" id="mcG-Uj-0l8"/>
                     </connections>
                 </viewController>
@@ -762,6 +780,9 @@ Ingredients</string>
             <point key="canvasLocation" x="3132" y="182"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="I5h-AM-Gz5"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="camera.viewfinder" catalog="system" width="128" height="114"/>
         <image name="pencil" catalog="system" width="128" height="113"/>

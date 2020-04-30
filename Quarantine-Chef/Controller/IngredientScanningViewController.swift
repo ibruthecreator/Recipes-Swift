@@ -16,7 +16,9 @@ class IngredientScanningViewController: CameraViewController {
     var basketCollectionView: UICollectionView!
     var finishButton: UIButton!
     var exitButton: UIButton!
+    var impactGenerator = UIImpactFeedbackGenerator(style: .medium)
     
+    // MARK: - Variables
     // Boolean value on whether or not an ingredient was just added to the basket
     // Updated by delegate methods
     var justAdded: Bool = false
@@ -204,6 +206,8 @@ extension IngredientScanningViewController: UICollectionViewDelegate, UICollecti
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        // Collection View (tag 0) -> Bottom collection view with search results
+        // Other collection view (else) -> Top collection view with current ingredients in basket
         if collectionView.tag == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ingredientCell", for: indexPath) as! IngredientCollectionViewCell
             cell.delegate = self
@@ -240,6 +244,8 @@ extension IngredientScanningViewController: UICollectionViewDelegate, UICollecti
 
 extension IngredientScanningViewController: IngredientCellDelegate {
     func didAddIngredient() {
+        impactGenerator.impactOccurred()
+        
         self.justAdded = true
         
         ingredientsCollectionView.reloadData()

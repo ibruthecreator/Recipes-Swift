@@ -22,6 +22,8 @@ class IngredientSearchTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        setupViews()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -32,14 +34,14 @@ class IngredientSearchTableViewCell: UITableViewCell {
     
     // MARK: - Setup Views
     func setupViews() {
-        addButton.makeCircular()
+        addButton.layer.cornerRadius = addButton.frame.height / 2
     }
     
     // MARK: - Update Content
     func updateContent() {
         if let ingredient = ingredient {
             // Set ingredient name label
-            ingredientNameLabel.text = ingredient.name?.uppercased() ?? "NaN"
+            ingredientNameLabel.text = ingredient.name?.capitalized ?? "NaN"
             
             // Download image and place in image view
             Recipes.sharedInstance.downloadImage(from: ingredient.image ?? "none.jpg", onlyFileName: true) { (image) in

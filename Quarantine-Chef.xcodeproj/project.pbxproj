@@ -109,7 +109,7 @@
 		1010804A23B449F50045F9CB = {
 			isa = PBXGroup;
 			children = (
-				1010805523B449F50045F9CB /* Recipes-Swift */,
+				1010805523B449F50045F9CB /* Quarantine-Chef */,
 				1010805423B449F50045F9CB /* Products */,
 				6DB751F0B0398A6665A4E33E /* Pods */,
 				657A88D0D7FEDF2D2B890055 /* Frameworks */,
@@ -124,7 +124,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1010805523B449F50045F9CB /* Recipes-Swift */ = {
+		1010805523B449F50045F9CB /* Quarantine-Chef */ = {
 			isa = PBXGroup;
 			children = (
 				1010805623B449F50045F9CB /* AppDelegate.swift */,
@@ -137,7 +137,7 @@
 				1010806123B449F80045F9CB /* LaunchScreen.storyboard */,
 				1010806423B449F80045F9CB /* Info.plist */,
 			);
-			path = "Recipes-Swift";
+			path = "Quarantine-Chef";
 			sourceTree = "<group>";
 		};
 		1010806A23B44A000045F9CB /* Model */ = {
@@ -173,9 +173,9 @@
 				107B0A2423BA8F43004105BD /* HomeViewController.swift */,
 				108C6B0723B6B388008E9724 /* IngredientScanningViewController.swift */,
 				1010805A23B449F50045F9CB /* CameraViewController.swift */,
+				10E31C7324552DC300FFD78C /* SearchManuallyViewController.swift */,
 				10B1F67223BD5BC6005A5440 /* RecipesViewController.swift */,
 				10A853DD23CA7C9C008FB36F /* RecipeDetailViewController.swift */,
-				10E31C7324552DC300FFD78C /* SearchManuallyViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -595,7 +595,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MH44BZV7ER;
-				INFOPLIST_FILE = "Recipes-Swift/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Quarantine-Chef/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -614,7 +614,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MH44BZV7ER;
-				INFOPLIST_FILE = "Recipes-Swift/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Quarantine-Chef/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

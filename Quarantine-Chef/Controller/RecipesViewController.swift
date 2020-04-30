@@ -58,12 +58,15 @@ class RecipesViewController: UIViewController {
     func fetchRecipes() {
         Recipes.sharedInstance.fetchRecipes { (success) in
             if success {
+                print("hi")
                 DispatchQueue.main.async {
                     self.recipesTableView.reloadData()
                 }
                 
                 return
             }
+            
+            print("nah")
             
             // TODO: Display error message
         }

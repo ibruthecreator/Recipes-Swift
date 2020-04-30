@@ -36,22 +36,26 @@ class Recipes {
         
         let query = "?apiKey=\(apiKey)&ingredients=\(allIngredients)&number=5&ranking=1&ignorePantry=true"
         
-        if let url = URL(string: findByIngredientsEndpoint + query) {
-            let request = URLRequest(url: url)
-            
-            URLSession.shared.dataTask(with: request) { (data, response, error) in
-                if let data = data {
-                    do {
-                        let recipes = try JSONDecoder().decode([Recipe].self, from: data)
-                        
-                        self.fetchAllRecipeInformation(recipes: recipes) { (success) in
-                            completion(true)
+        // Add Percent Encoding is needed in case the ingredients any of the ingredients have spaces
+        // For example, "Bell Pepper" raw in the URL would return the error, whereas "Bell%20Pepper" has the same value but is URL compatible
+        if let urlString = (findByIngredientsEndpoint + query).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+            if let url = URL(string: urlString) {
+                let request = URLRequest(url: url)
+                
+                URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    if let data = data {
+                        do {
+                            let recipes = try JSONDecoder().decode([Recipe].self, from: data)
+                            self.fetchAllRecipeInformation(recipes: recipes) { (success) in
+                                completion(true)
+                            }
+                        } catch let error {
+                            print(error)
                         }
-                    } catch let error {
-                        print(error)
+                    } else {
                     }
-                }
-            }.resume()
+                }.resume()
+            }
         }
     }
     
@@ -89,25 +93,21 @@ class Recipes {
         let query = "?apiKey=\(apiKey)&query=\(text)&number=\(limit)"
         self.autocompleteIngredients.removeAll()
         
-        if let url = URL(string: autocompleteIngredientEndpoint + query) {
-            print(autocompleteIngredientEndpoint + query)
-            
-            let request = URLRequest(url: url)
-            
-            URLSession.shared.dataTask(with: request) { (data, response, error) in
-                if let data = data {
-                    do {
-                        let ingredients = try JSONDecoder().decode([Ingredient].self, from: data)
-                        self.autocompleteIngredients = ingredients
-                        
-                        completion(true)
-                    } catch let error {
-                        print(error)
-                        completion(false)
+        if let urlString = (autocompleteIngredientEndpoint + query).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+            if let url = URL(string: urlString) {
+                let request = URLRequest(url: url)
+                URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    if let data = data {
+                        do {
+                            let ingredients = try JSONDecoder().decode([Ingredient].self, from: data)
+                            self.autocompleteIngredients = ingredients
+                            
+                            completion(true)
+                        } catch {
+                            completion(false)
+                        }
                     }
-                } else {
-                    print("fail")
-                }
+                }.resume()
             }
         }
     }
