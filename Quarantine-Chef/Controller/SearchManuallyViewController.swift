@@ -29,7 +29,7 @@ class SearchManuallyViewController: UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        Recipes.sharedInstance.autocompleteIngredients.removeAll()
+        Ingredients.sharedInstance.clearBasketAndPredictions()
     }
     
     // MARK: - Setup Views
@@ -37,13 +37,18 @@ class SearchManuallyViewController: UIViewController {
         continueButton.layer.cornerRadius = 8
         autocompleteTableView.showsVerticalScrollIndicator = false
         autocompleteTableView.allowsSelection = false
+        autocompleteTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: continueButton.frame.height + 40, right: 0)
+        
+        basketCollectionView.backgroundColor = UIColor.clear
+        basketCollectionView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        basketCollectionView.register(UINib(nibName: "BasketCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "basketCell")
     }
     
     /// API search for recipes to populate table view with suggestions
     /// - Parameter sender: Data source of text, like a text field (searchTextField, in this case)
     @IBAction func searchChanged(_ sender: Any) {
         if let sender = sender as? UITextField, let search = sender.text {
-            Recipes.sharedInstance.autocompleteIngredients(from: search) { (success) in
+            Ingredients.sharedInstance.autocompleteIngredients(from: search) { (success) in
                 if success {
                     DispatchQueue.main.async {
                         UIView.performWithoutAnimation {
@@ -77,12 +82,12 @@ class SearchManuallyViewController: UIViewController {
 extension SearchManuallyViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // If empty, return 1 cell which will act as the "empty" cell message
-        return Recipes.sharedInstance.autocompleteIngredients.count == 0 ? 1 : Recipes.sharedInstance.autocompleteIngredients.count
+        return Ingredients.sharedInstance.searchResults.count == 0 ? 1 : Ingredients.sharedInstance.searchResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // No search results returned, show an empty message
-        if Recipes.sharedInstance.autocompleteIngredients.count == 0 {
+        if Ingredients.sharedInstance.searchResults.count == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "emptyCell", for: indexPath)
             cell.textLabel?.textAlignment = .center
             cell.textLabel?.numberOfLines = 0
@@ -99,12 +104,11 @@ extension SearchManuallyViewController: UITableViewDelegate, UITableViewDataSour
         }
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientCell", for: indexPath) as? IngredientSearchTableViewCell {
-            
             cell.delegate = self
             
             // TODO: - Fix index out of range bug
-            if Recipes.sharedInstance.autocompleteIngredients.indices.contains(indexPath.row) {
-                let ingredient = Recipes.sharedInstance.autocompleteIngredients[indexPath.row]
+            if Ingredients.sharedInstance.searchResults.indices.contains(indexPath.row) {
+                let ingredient = Ingredients.sharedInstance.searchResults[indexPath.row]
                 cell.ingredient = ingredient
                 cell.updateContent()
                 
@@ -117,20 +121,43 @@ extension SearchManuallyViewController: UITableViewDelegate, UITableViewDataSour
 }
 
 // MARK: - UICollectionViewDelegate
-extension SearchManuallyViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+// Basket Collection View
+extension SearchManuallyViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Prediction.sharedInstance.basket.count
+        return Ingredients.sharedInstance.basket.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "basketCell", for: indexPath) as? BasketCollectionViewCell {
+            cell.delegate = self
+            cell.isDarkMode = true
+            cell.ingredient = Ingredients.sharedInstance.basket[indexPath.row]
+            cell.updateLabel()
+            
+            return cell
+        }
+        
         return UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let height = collectionView.frame.height
+
+        return CGSize(width: 200, height: height)
     }
 }
 
 // MARK: - IngredientCellDelegate
-extension SearchManuallyViewController: IngredientCellDelegate {
+extension SearchManuallyViewController: BasketCellDelegate {
+    func didRemoveIngredient() {
+        impactGenerator.impactOccurred()
+        self.autocompleteTableView.reloadData()
+        self.basketCollectionView.reloadData()
+        self.resignFirstResponder()
+    }
     func didAddIngredient() {
         impactGenerator.impactOccurred()
+        self.autocompleteTableView.reloadData()
         self.basketCollectionView.reloadData()
         self.resignFirstResponder()
     }

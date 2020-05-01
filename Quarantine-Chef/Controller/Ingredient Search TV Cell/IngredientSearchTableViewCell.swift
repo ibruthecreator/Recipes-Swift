@@ -17,7 +17,7 @@ class IngredientSearchTableViewCell: UITableViewCell {
     
     // MARK: - Variables
     var ingredient: Ingredient?
-    var delegate: IngredientCellDelegate?
+    var delegate: BasketCellDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,6 +43,8 @@ class IngredientSearchTableViewCell: UITableViewCell {
             // Set ingredient name label
             ingredientNameLabel.text = ingredient.name?.capitalized ?? "NaN"
             
+            self.ingredientImageView.image = nil
+            
             // Download image and place in image view
             Recipes.sharedInstance.downloadImage(from: ingredient.image ?? "none.jpg", onlyFileName: true) { (image) in
                 self.ingredientImageView.image = image
@@ -52,8 +54,8 @@ class IngredientSearchTableViewCell: UITableViewCell {
 
     // MARK: - Add Ingredient
     @IBAction func addIngredient(_ sender: Any) {
-        if let ingredientName = ingredient?.name {
-            Prediction.sharedInstance.addToBasket(ingredientName)
+        if ingredient != nil {
+            Ingredients.sharedInstance.addToBasket(ingredient!)
             delegate?.didAddIngredient()
         }
     }

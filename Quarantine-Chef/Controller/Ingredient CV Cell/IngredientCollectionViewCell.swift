@@ -11,13 +11,13 @@ import UIKit
 class IngredientCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Outlets
-    @IBOutlet weak var blurView: UIVisualEffectView!
-    @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var ingredientImageView: UIImageView!
+    @IBOutlet weak var addDeleteButton: UIButton!
     @IBOutlet weak var ingredientLabel: UILabel!
     
-    var ingredient: String?
-    
-    var delegate: IngredientCellDelegate?
+    var ingredient: Ingredient?
+    var isOnSearchView: Bool = false
+    var delegate: BasketCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,20 +30,43 @@ class IngredientCollectionViewCell: UICollectionViewCell {
     func setupViews() {
         self.layer.cornerRadius = 8
 
-        addButton.backgroundColor = UIColor.black
-        addButton.makeCircular()
+        addDeleteButton.backgroundColor = UIColor.black
+        addDeleteButton.makeCircular()
+        
+        if isOnSearchView {
+            addDeleteButton.setTitle("Remove", for: .normal)
+        } else {
+            addDeleteButton.setTitle("Add", for: .normal)
+        }
     }
     
     // MARK: - Update Label
     func updateLabel() {
-        ingredientLabel.text = ingredient?.capitalized ?? "Ingredient"
+        setupViews()    // Incase `isOnSearchView` was toggled after at some point
+        
+        ingredientLabel.text = ingredient?.name?.capitalized ?? "Ingredient"
+    }
+    
+    // MARK: - Update Image
+    func updateImage() {
+        self.ingredientImageView.image = nil
+        
+        if let ingredientName = ingredient?.name {
+            Ingredients.sharedInstance.getSingleIngredientImage(for: ingredientName) { (success, image) in
+                if success, let image = image {
+                    DispatchQueue.main.async {
+                        self.ingredientImageView.image = image
+                    }
+                }
+            }
+        }
     }
     
     // MARK: - Add Button
-    @IBAction func addButtonWasPressed(_ sender: Any) {
+    @IBAction func addDeleteButtonWasPressed(_ sender: Any) {
         if let ingredient = ingredient {
-            Prediction.sharedInstance.removeFromPredictions(ingredient)
-            Prediction.sharedInstance.addToBasket(ingredient)
+            Ingredients.sharedInstance.removeFromPredictions(ingredient)
+            Ingredients.sharedInstance.addToBasket(ingredient)
             delegate?.didAddIngredient()
         }
     }

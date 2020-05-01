@@ -1,91 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ingredientCell" id="gTV-IL-0wX" customClass="IngredientCollectionViewCell" customModule="Recipes_Swift" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="200" height="120"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ingredientCell" id="gTV-IL-0wX" customClass="IngredientCollectionViewCell" customModule="Quarantine_Chef" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="208"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="200" height="120"/>
+                <rect key="frame" x="0.0" y="0.0" width="200" height="208"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cy5-7z-KHN">
-                        <rect key="frame" x="0.0" y="0.0" width="200" height="120"/>
-                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="duP-C1-p7i">
-                            <rect key="frame" x="0.0" y="0.0" width="200" height="120"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lx8-6d-6MC">
-                                    <rect key="frame" x="0.0" y="0.0" width="200" height="120"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="oBD-is-LnU">
-                                            <rect key="frame" x="10" y="21.5" width="180" height="77.5"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ingredient" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pno-Wy-I2D">
-                                                    <rect key="frame" x="0.0" y="0.0" width="180" height="25.5"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="180" id="BEg-Eh-qAi"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="21"/>
-                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ON3-Gm-Tu7">
-                                                    <rect key="frame" x="41" y="40.5" width="98" height="37"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="98" id="Gxu-Av-tt4"/>
-                                                        <constraint firstAttribute="height" constant="37" id="e8H-vV-xXT"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                                    <state key="normal" title="Add">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="addButtonWasPressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="FkG-Ql-od1"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                        </stackView>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="oBD-is-LnU" firstAttribute="centerX" secondItem="lx8-6d-6MC" secondAttribute="centerX" id="7T3-K4-3sp"/>
-                                        <constraint firstItem="oBD-is-LnU" firstAttribute="centerY" secondItem="lx8-6d-6MC" secondAttribute="centerY" id="eO9-qx-Fgj"/>
-                                    </constraints>
-                                </view>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="lx8-6d-6MC" firstAttribute="top" secondItem="duP-C1-p7i" secondAttribute="top" id="AkA-rM-rPI"/>
-                                <constraint firstAttribute="bottom" secondItem="lx8-6d-6MC" secondAttribute="bottom" id="Nbx-AZ-xVF"/>
-                                <constraint firstAttribute="trailing" secondItem="lx8-6d-6MC" secondAttribute="trailing" id="bia-Id-qkG"/>
-                                <constraint firstItem="lx8-6d-6MC" firstAttribute="leading" secondItem="duP-C1-p7i" secondAttribute="leading" id="kfr-hU-csV"/>
-                            </constraints>
-                        </view>
-                        <blurEffect style="extraLight"/>
-                    </visualEffectView>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L8N-kX-I4J">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="247"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    </view>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Rzl-O1-QcA">
+                        <rect key="frame" x="10" y="116.5" width="180" height="77.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ingredient" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sV0-0Y-acq">
+                                <rect key="frame" x="0.0" y="0.0" width="180" height="25.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="eH0-XY-U3b"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="21"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgm-se-0wF">
+                                <rect key="frame" x="41" y="40.5" width="98" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="98" id="DWe-hX-AVR"/>
+                                    <constraint firstAttribute="height" constant="37" id="RN9-C3-JpQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <state key="normal" title="Add">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="addDeleteButtonWasPressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="aUw-6z-fGL"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="77.5" id="i5N-hW-NiO"/>
+                        </constraints>
+                    </stackView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b1W-ap-eYI">
+                        <rect key="frame" x="8" y="8" width="184" height="100.5"/>
+                    </imageView>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="cy5-7z-KHN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="09m-Or-gCW"/>
-                <constraint firstAttribute="bottom" secondItem="cy5-7z-KHN" secondAttribute="bottom" id="6Tb-OQ-Itq"/>
-                <constraint firstAttribute="trailing" secondItem="cy5-7z-KHN" secondAttribute="trailing" id="CaN-A8-rKk"/>
-                <constraint firstItem="cy5-7z-KHN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="hlb-1g-jko"/>
+                <constraint firstItem="b1W-ap-eYI" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="6KI-Hv-Hs7"/>
+                <constraint firstItem="Rzl-O1-QcA" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="E0V-or-kpG"/>
+                <constraint firstItem="Rzl-O1-QcA" firstAttribute="top" secondItem="b1W-ap-eYI" secondAttribute="bottom" constant="8" id="Jmf-Gn-Mei"/>
+                <constraint firstAttribute="trailing" secondItem="b1W-ap-eYI" secondAttribute="trailing" constant="8" id="Mck-Ch-huS"/>
+                <constraint firstAttribute="trailing" secondItem="Rzl-O1-QcA" secondAttribute="trailing" constant="10" id="cOp-qM-tfZ"/>
+                <constraint firstAttribute="bottom" secondItem="Rzl-O1-QcA" secondAttribute="bottom" constant="14" id="oOD-e9-wFC"/>
+                <constraint firstItem="b1W-ap-eYI" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="ooT-Ez-EWT"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <size key="customSize" width="287" height="180"/>
+            <size key="customSize" width="287" height="268"/>
             <connections>
-                <outlet property="addButton" destination="ON3-Gm-Tu7" id="Tez-2C-6wJ"/>
-                <outlet property="blurView" destination="cy5-7z-KHN" id="0Ns-5R-2zF"/>
-                <outlet property="ingredientLabel" destination="pno-Wy-I2D" id="Jcz-gs-ZVZ"/>
+                <outlet property="addDeleteButton" destination="fgm-se-0wF" id="eQ6-m0-v07"/>
+                <outlet property="ingredientImageView" destination="b1W-ap-eYI" id="maj-FI-aok"/>
+                <outlet property="ingredientLabel" destination="sV0-0Y-acq" id="MMb-62-Gd8"/>
             </connections>
-            <point key="canvasLocation" x="309.4202898550725" y="180.13392857142856"/>
+            <point key="canvasLocation" x="308.69565217391306" y="150.66964285714286"/>
         </collectionViewCell>
     </objects>
 </document>

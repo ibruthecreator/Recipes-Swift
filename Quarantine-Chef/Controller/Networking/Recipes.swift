@@ -12,8 +12,7 @@ class Recipes {
     static let sharedInstance = Recipes()
     
     var recipes: [Recipe] = []
-    var autocompleteIngredients: [Ingredient] = []
-
+    
     let findByIngredientsEndpoint = "https://api.spoonacular.com/recipes/findByIngredients"
     let informationBulkEndpoint = "https://api.spoonacular.com/recipes/informationBulk"
     let autocompleteIngredientEndpoint = "https://api.spoonacular.com/food/ingredients/autocomplete"
@@ -32,18 +31,22 @@ class Recipes {
     // The API requires that we use two different endpoints, one that searches by ingredients and one that gets details for the recipe
     // We call a method that utilises the second endpoint once we are finished decoding the recipes returned from this endpoint
     func fetchRecipes(completion: @escaping (_ success: Bool) -> ()) {
-        let allIngredients = Prediction.sharedInstance.basket.joined(separator: ",") // "," between words is how the API expects input
+        // 'compactMap' makes the basket array into an array of strings, which can then be concatenated with 'joined' ("," between words is how the API expects input)
+        let allIngredients = Ingredients.sharedInstance.basket.compactMap{$0.name}.joined(separator: ",")
         
         let query = "?apiKey=\(apiKey)&ingredients=\(allIngredients)&number=5&ranking=1&ignorePantry=true"
         
         // Add Percent Encoding is needed in case the ingredients any of the ingredients have spaces
         // For example, "Bell Pepper" raw in the URL would return the error, whereas "Bell%20Pepper" has the same value but is URL compatible
         if let urlString = (findByIngredientsEndpoint + query).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+            print(urlString)
             if let url = URL(string: urlString) {
                 let request = URLRequest(url: url)
                 
                 URLSession.shared.dataTask(with: request) { (data, response, error) in
                     if let data = data {
+                        // TODO: - Handle error for typemismatch when no results are returned.
+                        // To test: - Add only "cake" through the photo scanner and click continue; check logs.
                         do {
                             let recipes = try JSONDecoder().decode([Recipe].self, from: data)
                             self.fetchAllRecipeInformation(recipes: recipes) { (success) in
@@ -88,30 +91,6 @@ class Recipes {
         }
     }
     
-    // MARK: - Fetch Auto Complete Results for Recipes
-    func autocompleteIngredients(from text: String, limit: Int = 8, completion: @escaping (_ success: Bool) -> ()) {
-        let query = "?apiKey=\(apiKey)&query=\(text)&number=\(limit)"
-        self.autocompleteIngredients.removeAll()
-        
-        if let urlString = (autocompleteIngredientEndpoint + query).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
-            if let url = URL(string: urlString) {
-                let request = URLRequest(url: url)
-                URLSession.shared.dataTask(with: request) { (data, response, error) in
-                    if let data = data {
-                        do {
-                            let ingredients = try JSONDecoder().decode([Ingredient].self, from: data)
-                            self.autocompleteIngredients = ingredients
-                            
-                            completion(true)
-                        } catch {
-                            completion(false)
-                        }
-                    }
-                }.resume()
-            }
-        }
-    }
-    
     /// Downloads a recipe or ingredient image provided by the API, provided a URL, and returns a UIImage
     /// - Parameters:
     ///   - imageFile: Name of the file and extension
@@ -127,6 +106,7 @@ class Recipes {
         
         // Try to see if image has already been cached
         if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
+            print("Cached!")
             completion(cachedImage)
         } else {
             URLSession.shared.dataTask(with: url) { (data, response, error) in

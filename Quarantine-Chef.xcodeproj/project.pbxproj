@@ -20,7 +20,6 @@
 		1010806323B449F80045F9CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1010806123B449F80045F9CB /* LaunchScreen.storyboard */; };
 		107B0A1D23B93B3A004105BD /* BasketCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107B0A1B23B93B3A004105BD /* BasketCollectionViewCell.swift */; };
 		107B0A1E23B93B3A004105BD /* BasketCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 107B0A1C23B93B3A004105BD /* BasketCollectionViewCell.xib */; };
-		107B0A2123B944B0004105BD /* IngredientCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107B0A2023B944B0004105BD /* IngredientCellDelegate.swift */; };
 		107B0A2323B94A5B004105BD /* BasketCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107B0A2223B94A5B004105BD /* BasketCellDelegate.swift */; };
 		107B0A2523BA8F44004105BD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107B0A2423BA8F43004105BD /* HomeViewController.swift */; };
 		107B0A2823BA9051004105BD /* NewYorkExtraLarge-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 107B0A2723BA9050004105BD /* NewYorkExtraLarge-Bold.otf */; };
@@ -64,7 +63,6 @@
 		1010806423B449F80045F9CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		107B0A1B23B93B3A004105BD /* BasketCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketCollectionViewCell.swift; sourceTree = "<group>"; };
 		107B0A1C23B93B3A004105BD /* BasketCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BasketCollectionViewCell.xib; sourceTree = "<group>"; };
-		107B0A2023B944B0004105BD /* IngredientCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCellDelegate.swift; sourceTree = "<group>"; };
 		107B0A2223B94A5B004105BD /* BasketCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketCellDelegate.swift; sourceTree = "<group>"; };
 		107B0A2423BA8F43004105BD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		107B0A2723BA9050004105BD /* NewYorkExtraLarge-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NewYorkExtraLarge-Bold.otf"; sourceTree = "<group>"; };
@@ -192,7 +190,6 @@
 		107B0A1F23B944A2004105BD /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				107B0A2023B944B0004105BD /* IngredientCellDelegate.swift */,
 				107B0A2223B94A5B004105BD /* BasketCellDelegate.swift */,
 			);
 			path = Protocols;
@@ -447,7 +444,6 @@
 				1010805923B449F50045F9CB /* SceneDelegate.swift in Sources */,
 				108C6B0D23B6CEE1008E9724 /* UIButton+EnableDisable.swift in Sources */,
 				108C6B1923B6DA72008E9724 /* UIView+MakeCircular.swift in Sources */,
-				107B0A2123B944B0004105BD /* IngredientCellDelegate.swift in Sources */,
 				10B1F67723BE9EEB005A5440 /* Recipe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

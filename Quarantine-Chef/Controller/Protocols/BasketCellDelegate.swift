@@ -9,5 +9,6 @@
 import Foundation
 
 protocol BasketCellDelegate {
+    func didAddIngredient()
     func didRemoveIngredient()
 }

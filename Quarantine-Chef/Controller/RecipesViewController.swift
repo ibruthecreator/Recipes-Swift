@@ -90,8 +90,7 @@ class RecipesViewController: UIViewController {
         
         // Empty everything
         Recipes.sharedInstance.recipes.removeAll()
-        Prediction.sharedInstance.predictions.removeAll()
-        Prediction.sharedInstance.basket.removeAll()
+        Ingredients.sharedInstance.clearBasketAndPredictions()
         
         self.navigationController?.popToRootViewController(animated: true)
     }
@@ -166,13 +165,13 @@ extension RecipesViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - Collection View Delegate Methods
 extension RecipesViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Prediction.sharedInstance.basket.count
+        return Ingredients.sharedInstance.basket.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "basketCell", for: indexPath) as! BasketCollectionViewCell
         
-        let ingredient = Prediction.sharedInstance.basket[indexPath.row]
+        let ingredient = Ingredients.sharedInstance.basket[indexPath.row]
         cell.ingredient = ingredient
         cell.updateLabel()
         

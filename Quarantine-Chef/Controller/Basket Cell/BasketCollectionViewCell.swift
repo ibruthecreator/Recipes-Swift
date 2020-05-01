@@ -13,10 +13,12 @@ class BasketCollectionViewCell: UICollectionViewCell {
     // MARK: - Outlets
     @IBOutlet weak var ingredientLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var blurView: UIVisualEffectView!
     
-    var ingredient: String?
+    var ingredient: Ingredient?
     
     var delegate: BasketCellDelegate?
+    var isDarkMode: Bool = false
         
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,11 +31,18 @@ class BasketCollectionViewCell: UICollectionViewCell {
     func setupViews() {
         self.makeCircular()
         self.layer.masksToBounds = true // Clips off anything overflowing edges
+        
+        if isDarkMode {
+            blurView.effect = UIBlurEffect(style: .dark)
+        } else {
+            blurView.effect = UIBlurEffect(style: .light)
+        }
     }
 
     // MARK: - Update Label
     func updateLabel() {
-        ingredientLabel.text = ingredient?.capitalized ?? "Ingredient"
+        setupViews() // Incase dark mode set later
+        ingredientLabel.text = ingredient?.name?.capitalized ?? "Ingredient"
     }
     
     // MARK: - Flash Black
@@ -53,7 +62,7 @@ class BasketCollectionViewCell: UICollectionViewCell {
     // MARK: - Remove From Basket
     @IBAction func removeFromBasket(_ sender: Any) {
         if let ingredient = ingredient {
-            Prediction.sharedInstance.removeFromBasket(ingredient)
+            Ingredients.sharedInstance.removeFromBasket(ingredient)
             delegate?.didRemoveIngredient()
         }
     }
