@@ -327,6 +327,18 @@ Ingredients</string>
                                     <segue destination="60N-ea-EB4" kind="show" id="I5h-AM-Gz5"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="chicken, brocolli, chickpeas" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X59-WO-X9O">
+                                <rect key="frame" x="20" y="229" width="374" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="zIA-b2-opg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <connections>
+                                    <action selector="dismissKeyboard:" destination="qEK-tK-h8o" eventType="editingDidEndOnExit" id="oSq-Kg-AFj"/>
+                                    <action selector="searchChanged:" destination="qEK-tK-h8o" eventType="editingChanged" id="4kG-Q9-GFJ"/>
+                                </connections>
+                            </textField>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6Lo-y0-hZN">
                                 <rect key="frame" x="0.0" y="172" width="414" height="37"/>
                                 <constraints>
@@ -339,7 +351,7 @@ Ingredients</string>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Hpm-Iq-tah">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="basketCellPrototype" id="Hpm-Iq-tah">
                                         <rect key="frame" x="0.0" y="5" width="147" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="gKS-kZ-6y8">
@@ -354,18 +366,6 @@ Ingredients</string>
                                     <outlet property="delegate" destination="qEK-tK-h8o" id="hRb-Fc-j1J"/>
                                 </connections>
                             </collectionView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="chicken, brocolli, chickpeas" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X59-WO-X9O">
-                                <rect key="frame" x="20" y="229" width="374" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="zIA-b2-opg"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                <connections>
-                                    <action selector="dismissKeyboard:" destination="qEK-tK-h8o" eventType="editingDidEndOnExit" id="oSq-Kg-AFj"/>
-                                    <action selector="searchChanged:" destination="qEK-tK-h8o" eventType="editingChanged" id="4kG-Q9-GFJ"/>
-                                </connections>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -394,6 +394,7 @@ Ingredients</string>
                     <connections>
                         <outlet property="autocompleteTableView" destination="Bd6-3U-Txt" id="Zsg-Ci-2Vl"/>
                         <outlet property="basketCollectionView" destination="6Lo-y0-hZN" id="TEh-Wk-ECE"/>
+                        <outlet property="basketCollectionViewHeightConstraint" destination="Za3-PZ-ePm" id="xfm-Oe-mfd"/>
                         <outlet property="continueButton" destination="UtE-q9-ZX2" id="Mvy-WG-G6n"/>
                         <outlet property="searchTextField" destination="X59-WO-X9O" id="mcG-Uj-0l8"/>
                     </connections>
@@ -482,7 +483,7 @@ Ingredients</string>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="100" id="vJA-mz-KvB"/>
                                                 </constraints>
-                                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fm8-N6-xeH">
+                                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fm8-N6-xeH" customClass="LeftAlignedCollectionViewFlowLayout" customModule="Quarantine_Chef" customModuleProvider="target">
                                                     <size key="itemSize" width="152" height="39"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -638,7 +639,7 @@ Ingredients</string>
                                                 </connections>
                                             </tableView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kbA-Kc-V8o">
-                                                <rect key="frame" x="20" y="721" width="374" height="60"/>
+                                                <rect key="frame" x="20" y="721" width="306" height="60"/>
                                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="oCz-Id-hSt"/>
@@ -706,22 +707,40 @@ Ingredients</string>
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Spv-mi-cBf">
+                                                <rect key="frame" x="334" y="721" width="60" height="60"/>
+                                                <color key="backgroundColor" red="1" green="0.22790025680000001" blue="0.4297856021" alpha="0.85244541949999997" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="60" id="1No-jr-Iif"/>
+                                                    <constraint firstAttribute="height" constant="60" id="3a6-Wd-t8y"/>
+                                                </constraints>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" image="square.and.arrow.up" catalog="system">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="semibold"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="showShareSheet:" destination="Byy-cw-Ud6" eventType="touchUpInside" id="zvN-TN-Vh3"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="x4b-rh-r95" secondAttribute="trailing" constant="20" id="4Y8-xK-fxz"/>
                                             <constraint firstItem="x4b-rh-r95" firstAttribute="top" secondItem="kVI-Uv-Az2" secondAttribute="bottom" constant="10" id="4uA-Gz-olL"/>
                                             <constraint firstItem="X9h-gG-OXu" firstAttribute="top" secondItem="x4b-rh-r95" secondAttribute="bottom" constant="20" id="BSV-FP-xug"/>
+                                            <constraint firstAttribute="bottom" secondItem="Spv-mi-cBf" secondAttribute="bottom" constant="20" id="Cdp-oz-VB1"/>
+                                            <constraint firstItem="Spv-mi-cBf" firstAttribute="top" secondItem="X9h-gG-OXu" secondAttribute="bottom" constant="20" id="CnM-P5-lKl"/>
                                             <constraint firstAttribute="trailing" secondItem="X9h-gG-OXu" secondAttribute="trailing" id="Dtk-Qh-05h"/>
                                             <constraint firstAttribute="bottom" secondItem="kbA-Kc-V8o" secondAttribute="bottom" constant="20" id="Go4-N4-zPo"/>
                                             <constraint firstItem="X9h-gG-OXu" firstAttribute="leading" secondItem="OS7-xH-ES3" secondAttribute="leading" id="HOi-CC-01M"/>
                                             <constraint firstItem="kbA-Kc-V8o" firstAttribute="top" secondItem="X9h-gG-OXu" secondAttribute="bottom" constant="20" id="LvQ-e9-KR0"/>
                                             <constraint firstItem="kbA-Kc-V8o" firstAttribute="leading" secondItem="OS7-xH-ES3" secondAttribute="leading" constant="20" id="MC9-ap-xtP"/>
-                                            <constraint firstAttribute="trailing" secondItem="kbA-Kc-V8o" secondAttribute="trailing" constant="20" id="OSl-XC-Mww"/>
                                             <constraint firstItem="kVI-Uv-Az2" firstAttribute="top" secondItem="OS7-xH-ES3" secondAttribute="top" id="TM4-p9-BPO"/>
                                             <constraint firstItem="x4b-rh-r95" firstAttribute="leading" secondItem="OS7-xH-ES3" secondAttribute="leading" constant="20" id="a12-je-35s"/>
                                             <constraint firstAttribute="trailing" secondItem="kVI-Uv-Az2" secondAttribute="trailing" id="aal-ax-hBe"/>
                                             <constraint firstItem="kVI-Uv-Az2" firstAttribute="leading" secondItem="OS7-xH-ES3" secondAttribute="leading" id="bJ5-wB-bpI"/>
+                                            <constraint firstAttribute="trailing" secondItem="Spv-mi-cBf" secondAttribute="trailing" constant="20" id="c13-fo-Y1O"/>
+                                            <constraint firstItem="Spv-mi-cBf" firstAttribute="leading" secondItem="kbA-Kc-V8o" secondAttribute="trailing" constant="8" id="w9h-e8-tg1"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -776,6 +795,7 @@ Ingredients</string>
                         <outlet property="recipeCardContentViewTrailingAnchor" destination="aal-ax-hBe" id="gjy-V9-1tl"/>
                         <outlet property="recipeCardContentViewWidthAnchor" destination="ocD-Hw-POL" id="hU2-0s-spz"/>
                         <outlet property="scrollView" destination="dbw-ia-157" id="COt-Kp-p7b"/>
+                        <outlet property="shareButton" destination="Spv-mi-cBf" id="aTS-lP-6Ot"/>
                         <outlet property="viewRecipeButton" destination="kbA-Kc-V8o" id="NdA-Ub-Hq0"/>
                     </connections>
                 </viewController>
@@ -790,6 +810,7 @@ Ingredients</string>
     <resources>
         <image name="camera.viewfinder" catalog="system" width="128" height="114"/>
         <image name="pencil" catalog="system" width="128" height="113"/>
+        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
     </resources>
 </document>

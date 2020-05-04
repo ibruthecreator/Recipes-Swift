@@ -29,7 +29,7 @@
 		108C6B0B23B6B769008E9724 /* UIColor+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C6B0A23B6B769008E9724 /* UIColor+Theme.swift */; };
 		108C6B0D23B6CEE1008E9724 /* UIButton+EnableDisable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C6B0C23B6CEE1008E9724 /* UIButton+EnableDisable.swift */; };
 		108C6B0F23B6CF18008E9724 /* UIView+FadeInOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C6B0E23B6CF18008E9724 /* UIView+FadeInOut.swift */; };
-		108C6B1223B6D3BB008E9724 /* Prediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C6B1123B6D3BB008E9724 /* Prediction.swift */; };
+		108C6B1223B6D3BB008E9724 /* Ingredients.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C6B1123B6D3BB008E9724 /* Ingredients.swift */; };
 		108C6B1623B6D8EF008E9724 /* IngredientCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C6B1423B6D8EF008E9724 /* IngredientCollectionViewCell.swift */; };
 		108C6B1723B6D8EF008E9724 /* IngredientCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 108C6B1523B6D8EF008E9724 /* IngredientCollectionViewCell.xib */; };
 		108C6B1923B6DA72008E9724 /* UIView+MakeCircular.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C6B1823B6DA72008E9724 /* UIView+MakeCircular.swift */; };
@@ -44,6 +44,7 @@
 		10E31C7424552DC300FFD78C /* SearchManuallyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E31C7324552DC300FFD78C /* SearchManuallyViewController.swift */; };
 		10E31C762455329900FFD78C /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E31C752455329900FFD78C /* Ingredient.swift */; };
 		10E31C79245567CC00FFD78C /* IngredientSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E31C78245567CC00FFD78C /* IngredientSearchTableViewCell.swift */; };
+		10F58725245E9DDB00BD6766 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F58724245E9DDB00BD6766 /* LeftAlignedCollectionViewFlowLayout.swift */; };
 		461D6236B4A66D37E1881E39 /* Pods_Recipes_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E1F34152C908E609769BED /* Pods_Recipes_Swift.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,7 +73,7 @@
 		108C6B0A23B6B769008E9724 /* UIColor+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Theme.swift"; sourceTree = "<group>"; };
 		108C6B0C23B6CEE1008E9724 /* UIButton+EnableDisable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+EnableDisable.swift"; sourceTree = "<group>"; };
 		108C6B0E23B6CF18008E9724 /* UIView+FadeInOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+FadeInOut.swift"; sourceTree = "<group>"; };
-		108C6B1123B6D3BB008E9724 /* Prediction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prediction.swift; sourceTree = "<group>"; };
+		108C6B1123B6D3BB008E9724 /* Ingredients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredients.swift; sourceTree = "<group>"; };
 		108C6B1423B6D8EF008E9724 /* IngredientCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCollectionViewCell.swift; sourceTree = "<group>"; };
 		108C6B1523B6D8EF008E9724 /* IngredientCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IngredientCollectionViewCell.xib; sourceTree = "<group>"; };
 		108C6B1823B6DA72008E9724 /* UIView+MakeCircular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+MakeCircular.swift"; sourceTree = "<group>"; };
@@ -87,6 +88,7 @@
 		10E31C7324552DC300FFD78C /* SearchManuallyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchManuallyViewController.swift; sourceTree = "<group>"; };
 		10E31C752455329900FFD78C /* Ingredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredient.swift; sourceTree = "<group>"; };
 		10E31C78245567CC00FFD78C /* IngredientSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientSearchTableViewCell.swift; sourceTree = "<group>"; };
+		10F58724245E9DDB00BD6766 /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		290B963B6A570035BE02E10C /* Pods-Recipes-Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Recipes-Swift.release.xcconfig"; path = "Target Support Files/Pods-Recipes-Swift/Pods-Recipes-Swift.release.xcconfig"; sourceTree = "<group>"; };
 		52E1F34152C908E609769BED /* Pods_Recipes_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Recipes_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA15A84404C55F49123BA79F /* Pods-Recipes-Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Recipes-Swift.debug.xcconfig"; path = "Target Support Files/Pods-Recipes-Swift/Pods-Recipes-Swift.debug.xcconfig"; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 			children = (
 				107B0A1B23B93B3A004105BD /* BasketCollectionViewCell.swift */,
 				107B0A1C23B93B3A004105BD /* BasketCollectionViewCell.xib */,
+				10F58724245E9DDB00BD6766 /* LeftAlignedCollectionViewFlowLayout.swift */,
 			);
 			path = "Basket Cell";
 			sourceTree = "<group>";
@@ -238,7 +241,7 @@
 		108C6B1023B6D388008E9724 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				108C6B1123B6D3BB008E9724 /* Prediction.swift */,
+				108C6B1123B6D3BB008E9724 /* Ingredients.swift */,
 				10B1F67423BD799A005A5440 /* Recipes.swift */,
 			);
 			path = Networking;
@@ -420,6 +423,7 @@
 				10E31C762455329900FFD78C /* Ingredient.swift in Sources */,
 				1010805723B449F50045F9CB /* AppDelegate.swift in Sources */,
 				1001495423CFBBBE0087D746 /* NibLoadable.swift in Sources */,
+				10F58725245E9DDB00BD6766 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				108C6B0823B6B388008E9724 /* IngredientScanningViewController.swift in Sources */,
 				10B1F67B23BEA245005A5440 /* RecipeTableViewCell.swift in Sources */,
 				10B1F66F23BC6CFB005A5440 /* SnappingCollectionViewLayout.swift in Sources */,
@@ -432,7 +436,7 @@
 				10E31C79245567CC00FFD78C /* IngredientSearchTableViewCell.swift in Sources */,
 				10A853DE23CA7C9C008FB36F /* RecipeDetailViewController.swift in Sources */,
 				107B0A2523BA8F44004105BD /* HomeViewController.swift in Sources */,
-				108C6B1223B6D3BB008E9724 /* Prediction.swift in Sources */,
+				108C6B1223B6D3BB008E9724 /* Ingredients.swift in Sources */,
 				1080936623E28C11000309FF /* IngredientTableViewCell.swift in Sources */,
 				107B0A1D23B93B3A004105BD /* BasketCollectionViewCell.swift in Sources */,
 				10B1F67323BD5BC6005A5440 /* RecipesViewController.swift in Sources */,

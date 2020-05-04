@@ -30,6 +30,9 @@ class RecipeDetailViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
     
+    @IBOutlet weak var shareButton: UIButton!
+    
+    
     var cellFrame: CGRect?
     var recipe: Recipe?
     
@@ -51,6 +54,8 @@ class RecipeDetailViewController: UIViewController {
         
         ingredientsTableView.rowHeight = UITableView.automaticDimension
         ingredientsTableView.estimatedRowHeight = 42.5
+        
+        shareButton.layer.cornerRadius = 8
     }
     
     // Hide status bar for this VC alone
@@ -120,6 +125,23 @@ class RecipeDetailViewController: UIViewController {
         ingredientsTableViewHeightAnchor.constant = ingredientsTableViewContentSize
         
         self.view.layoutIfNeeded()  // Flush changes
+    }
+    
+    // MARK: - Show Share Sheet
+    @IBAction func showShareSheet(_ sender: Any) {
+        if let recipe = recipe, let sourceURL = recipe.sourceUrl, let url = URL(string: sourceURL) {
+            let items: [Any] = ["Check out this recipe!", url]
+            let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
+            present(ac, animated: true)
+            
+        } else {
+            let alert = UIAlertController(title: "Could not share recipe", message: "This recipe is missing some information, such as it's URL, and cannot be shared.", preferredStyle: .alert)
+            
+            let dismissAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            alert.addAction(dismissAction)
+            
+            present(alert, animated: true, completion: nil)
+        }
     }
 }
 

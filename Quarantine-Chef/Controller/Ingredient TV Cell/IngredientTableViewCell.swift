@@ -40,7 +40,12 @@ class IngredientTableViewCell: UITableViewCell {
                 let name = ingredient.name,
                 let unit = ingredient.unit {
                 ingredientAmountLabel.text = String(format: "%.2f", amount) // Grounding decimal places, sometimes values are irrational
-                ingredientNameLabel.text = "\(unit) \(name)"
+                
+                if unit == "" { // Sometimes units are not specified, this is to remove random space in this case
+                    ingredientNameLabel.text = name
+                } else {
+                    ingredientNameLabel.text = "\(unit) \(name)"
+                }
             } else {
                 print("Empty")
             }

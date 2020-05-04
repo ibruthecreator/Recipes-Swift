@@ -32,17 +32,21 @@ class BasketCollectionViewCell: UICollectionViewCell {
         self.makeCircular()
         self.layer.masksToBounds = true // Clips off anything overflowing edges
         
+        toggleDisplayMode()
+    }
+
+    // MARK: - Update Label
+    func updateLabel() {
+        toggleDisplayMode() // Incase dark mode set later
+        ingredientLabel.text = ingredient?.name?.capitalized ?? "Ingredient"
+    }
+    
+    func toggleDisplayMode() {
         if isDarkMode {
             blurView.effect = UIBlurEffect(style: .dark)
         } else {
             blurView.effect = UIBlurEffect(style: .light)
         }
-    }
-
-    // MARK: - Update Label
-    func updateLabel() {
-        setupViews() // Incase dark mode set later
-        ingredientLabel.text = ingredient?.name?.capitalized ?? "Ingredient"
     }
     
     // MARK: - Flash Black

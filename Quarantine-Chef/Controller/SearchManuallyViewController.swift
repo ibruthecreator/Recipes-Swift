@@ -15,6 +15,9 @@ class SearchManuallyViewController: UIViewController {
     @IBOutlet weak var autocompleteTableView: UITableView!
     @IBOutlet weak var basketCollectionView: UICollectionView!
     @IBOutlet weak var continueButton: UIButton!
+    @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var basketCollectionViewHeightConstraint: NSLayoutConstraint!
+    
     var impactGenerator = UIImpactFeedbackGenerator(style: .medium)
 
     override func viewDidLoad() {
@@ -34,6 +37,16 @@ class SearchManuallyViewController: UIViewController {
     
     // MARK: - Setup Views
     func setupViews() {
+        basketCollectionViewHeightConstraint.constant = 0
+        self.reloadViews()
+        
+        // If empty, disable continue button
+        if Ingredients.sharedInstance.basket.count == 0 {
+            self.continueButton.disable()
+        } else {
+            self.continueButton.enable()
+        }
+        
         continueButton.layer.cornerRadius = 8
         autocompleteTableView.showsVerticalScrollIndicator = false
         autocompleteTableView.allowsSelection = false
@@ -63,6 +76,14 @@ class SearchManuallyViewController: UIViewController {
                     print("completion fail")
                 }
             }
+        }
+    }
+    
+    /// Reload views with smooth animation
+    func reloadViews() {
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+            self.view.layoutSubviews()
         }
     }
     
@@ -124,6 +145,18 @@ extension SearchManuallyViewController: UITableViewDelegate, UITableViewDataSour
 // Basket Collection View
 extension SearchManuallyViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        DispatchQueue.main.async {
+            self.basketCollectionViewHeightConstraint.constant = Ingredients.sharedInstance.basket.count == 0 ? 0 : 37
+            self.reloadViews()
+            
+            // If empty, disable continue button
+            if Ingredients.sharedInstance.basket.count == 0 {
+                self.continueButton.disable()
+            } else {
+                self.continueButton.enable()
+            }
+        }
+        
         return Ingredients.sharedInstance.basket.count
     }
     

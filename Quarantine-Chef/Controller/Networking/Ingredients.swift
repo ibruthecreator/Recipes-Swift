@@ -31,7 +31,7 @@ class Ingredients {
                         
                         for output in outputs {
                             for concept in output.concepts {
-                                var ingredient = Ingredient(name: concept.conceptName, image: nil)
+                                let ingredient = Ingredient(name: concept.conceptName, image: nil)
                                 // Only want reasonably plausible options that are not already in the users basket
                                 if concept.score > 0.85 && !self.isInBasket(ingredient) {
                                     self.searchResults.append(ingredient)

@@ -56,6 +56,7 @@ class IngredientSearchTableViewCell: UITableViewCell {
     @IBAction func addIngredient(_ sender: Any) {
         if ingredient != nil {
             Ingredients.sharedInstance.addToBasket(ingredient!)
+            Ingredients.sharedInstance.removeFromPredictions(ingredient!)
             delegate?.didAddIngredient()
         }
     }

@@ -19,6 +19,8 @@ class RecipesViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
     
+    let activityIndicator = UIActivityIndicatorView(style: .large)
+    
     var selectedRecipeFrame: CGRect?
     
     override func viewDidLoad() {
@@ -44,6 +46,11 @@ class RecipesViewController: UIViewController {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         
+        // Position progress indicator and start animating
+        activityIndicator.center = self.view.center
+        activityIndicator.startAnimating()
+        self.view.addSubview(activityIndicator)
+        
         // Add clear view to the background view of the cell.
         // This is so selection of a cell isn't gray
         // Making selection = none breaks animation logic, so this is a better solution
@@ -57,17 +64,17 @@ class RecipesViewController: UIViewController {
     // MARK: - Fetch Ingredients
     func fetchRecipes() {
         Recipes.sharedInstance.fetchRecipes { (success) in
+            DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+            }
+
             if success {
-                print("hi")
                 DispatchQueue.main.async {
                     self.recipesTableView.reloadData()
                 }
                 
                 return
             }
-            
-            print("nah")
-            
             // TODO: Display error message
         }
     }
