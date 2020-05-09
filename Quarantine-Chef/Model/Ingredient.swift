@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Ingredient: Codable, Equatable {
+struct Ingredient: Codable, Equatable {
     var name: String?
     var image: String?
     
@@ -22,5 +22,3 @@ class Ingredient: Codable, Equatable {
         lhs.name == rhs.name
     }
 }
-
-

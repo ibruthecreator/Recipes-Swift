@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Recipe: Codable {
+struct Recipe: Codable {
     var id: Int           // ID of the recipe
     var title: String?    // Title of the Recipe
     var image: String?    // Original URL of the image
