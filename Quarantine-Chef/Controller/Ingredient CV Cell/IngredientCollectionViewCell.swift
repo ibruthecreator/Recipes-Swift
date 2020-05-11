@@ -11,8 +11,7 @@ import UIKit
 class IngredientCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Outlets
-    @IBOutlet weak var ingredientImageView: UIImageView!
-    @IBOutlet weak var addDeleteButton: UIButton!
+    @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var ingredientLabel: UILabel!
     
     var ingredient: Ingredient?
@@ -30,45 +29,28 @@ class IngredientCollectionViewCell: UICollectionViewCell {
     func setupViews() {
         self.layer.cornerRadius = 8
 
-        addDeleteButton.backgroundColor = UIColor.black
-        addDeleteButton.makeCircular()
+        addButton.backgroundColor = UIColor.black
+        addButton.makeCircular()
         
         if isOnSearchView {
-            addDeleteButton.setTitle("Remove", for: .normal)
+            addButton.setTitle("Remove", for: .normal)
         } else {
-            addDeleteButton.setTitle("Add", for: .normal)
+            addButton.setTitle("Add", for: .normal)
         }
     }
     
-    // MARK: - Update Label
     func updateLabel() {
         setupViews()    // Incase `isOnSearchView` was toggled after at some point
         
         ingredientLabel.text = ingredient?.name?.capitalized ?? "Ingredient"
     }
     
-    // MARK: - Update Image
-    func updateImage() {
-        self.ingredientImageView.image = nil
-        
-        if let ingredientName = ingredient?.name {
-            Ingredients.sharedInstance.getSingleIngredientImage(for: ingredientName) { (success, image) in
-                if success, let image = image {
-                    DispatchQueue.main.async {
-                        self.ingredientImageView.image = image
-                    }
-                }
-            }
-        }
-    }
-    
-    // MARK: - Add Button
-    @IBAction func addDeleteButtonWasPressed(_ sender: Any) {
+    /// Add button was pressed, checks to see if ingredient is not nil, then removes from prediction list and adds it to basket.
+    @IBAction func addButtonWasPressed(_ sender: Any) {
         if let ingredient = ingredient {
             Ingredients.sharedInstance.removeFromPredictions(ingredient)
             Ingredients.sharedInstance.addToBasket(ingredient)
             delegate?.didAddIngredient()
         }
     }
-    
 }

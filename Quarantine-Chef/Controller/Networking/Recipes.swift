@@ -19,22 +19,20 @@ class Recipes {
     
     let ingredientImageURL = "https://spoonacular.com/cdn/ingredients_500x500/"
 
-    // Fixed parameters - everything except ingredients
+    /// Fixed parameters - everything except ingredients
     let apiKey = "7845152a156345c9b7ffb9ea93a0b4ae"
     
-    // Store images for cache, prevents flickering in transition
+    /// Store images for cache, prevents flickering in transition
     let imageCache = NSCache<NSString, UIImage>()
     
     // MARK: - Fetch Recipes
-    // This only gets information such as title, image, and the sorts
-    // While this is sufficient, we need more details for each recipe in the case that the user clicks for more information
-    // The API requires that we use two different endpoints, one that searches by ingredients and one that gets details for the recipe
-    // We call a method that utilises the second endpoint once we are finished decoding the recipes returned from this endpoint
+    /// This only gets information such as title, image, and the sorts. While this is sufficient, we need more details for each recipe in the case that the user clicks for more information. The API requires that we use two different endpoints, one that searches by ingredients and one that gets details for the recipe. We call a method that utilises the second endpoint once we are finished decoding the recipes returned from this endpoint
     func fetchRecipes(completion: @escaping (_ success: Bool) -> ()) {
         // 'compactMap' makes the basket array into an array of strings, which can then be concatenated with 'joined' ("," between words is how the API expects input)
         let allIngredients = Ingredients.sharedInstance.basket.compactMap{$0.name}.joined(separator: ",")
         
-        let query = "?apiKey=\(apiKey)&ingredients=\(allIngredients)&number=5&ranking=1&ignorePantry=true"
+        // ranking = 2, per API documents minimizes the recipes with missing ingredients and optimizes for recipes with included recipes
+        let query = "?apiKey=\(apiKey)&ingredients=\(allIngredients)&number=5&ranking=2&ignorePantry=true"
         
         // Add Percent Encoding is needed in case the ingredients any of the ingredients have spaces
         // For example, "Bell Pepper" raw in the URL would return the error, whereas "Bell%20Pepper" has the same value but is URL compatible
@@ -62,7 +60,11 @@ class Recipes {
         }
     }
     
-    // MARK: - Fetch Recipe Information
+    /// Fetches detailed recipe information
+    /// - Parameters:
+    ///   - recipes: An array of recipes to fetch information on of type `Recipe`
+    ///   - completion: completion handler to fire once action is completed in any degree
+    /// - Returns: returns true if successful, false otherwise
     func fetchAllRecipeInformation(recipes: [Recipe], completion: @escaping (_ success: Bool) -> ()) {
         var recipeIDs: [String] = []
         

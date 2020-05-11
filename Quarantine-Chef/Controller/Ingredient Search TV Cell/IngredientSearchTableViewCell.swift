@@ -37,7 +37,6 @@ class IngredientSearchTableViewCell: UITableViewCell {
         addButton.layer.cornerRadius = addButton.frame.height / 2
     }
     
-    // MARK: - Update Content
     func updateContent() {
         if let ingredient = ingredient {
             // Set ingredient name label
@@ -52,11 +51,11 @@ class IngredientSearchTableViewCell: UITableViewCell {
         }
     }
 
-    // MARK: - Add Ingredient
+    /// Add button was pressed, checks to see if ingredient is not nil, then removes from prediction list and adds it to basket.
     @IBAction func addIngredient(_ sender: Any) {
-        if ingredient != nil {
-            Ingredients.sharedInstance.addToBasket(ingredient!)
-            Ingredients.sharedInstance.removeFromPredictions(ingredient!)
+        if let ingredient = ingredient {
+            Ingredients.sharedInstance.addToBasket(ingredient)
+            Ingredients.sharedInstance.removeFromPredictions(ingredient)
             delegate?.didAddIngredient()
         }
     }

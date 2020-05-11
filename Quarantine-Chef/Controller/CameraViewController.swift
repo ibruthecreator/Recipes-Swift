@@ -39,7 +39,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         startTimer()
     }
 
-    // MARK: - Setup AVCapture
+    // MARK: - AVCapture
     // Sets up AV Capture to process and show live video from the camera
     // Also starts the session
     func setupAVCapture() {
@@ -108,33 +108,31 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         view.layer.addSublayer(previewLayer)
     }
 
-    // Start the session
+    /// Start the session
     func startSession() {
         session.startRunning()
     }
     
-    // Stop Session and Invalidate Timer
+    /// Stop Session and Invalidate Timer
     func stop() {
         session.stopRunning()
         timer.invalidate()
     }
     
-    // Start Timer
-    // Timer is so that the API isn't fired every single frame and to avoid bankruptcy from API fees
+    /// Start a timer so that the API isn't fired every single frame and to avoid bankruptcy from API fees
     func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { (timer) in
             self.captureInput()
         }
     }
 
-    // Capture Input From Session
     func captureInput() {}
     
     func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         print("Drop Frames")
     }
 
-    // MARK: - Capture Camera Output
+    /// Capture frame from image buffer and save image for API request later to a variable called `currentFrame`
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
@@ -153,27 +151,6 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         currentFrame = uiImage
         
         return
-    }
-
-    // Get orientation from device
-    func exifOrientationFromDeviceOrientation() -> CGImagePropertyOrientation {
-        let curDeviceOrientation = UIDevice.current.orientation
-        let exifOrientation: CGImagePropertyOrientation
-       
-        switch curDeviceOrientation {
-        case UIDeviceOrientation.portraitUpsideDown:  // Device oriented vertically, home button on the top
-            exifOrientation = .left
-        case UIDeviceOrientation.landscapeLeft:       // Device oriented horizontally, home button on the right
-            exifOrientation = .upMirrored
-        case UIDeviceOrientation.landscapeRight:      // Device oriented horizontally, home button on the left
-           exifOrientation = .down
-        case UIDeviceOrientation.portrait:            // Device oriented vertically, home button on the bottom
-           exifOrientation = .up
-        default:
-           exifOrientation = .up
-        }
-        
-        return exifOrientation
     }
 }
 

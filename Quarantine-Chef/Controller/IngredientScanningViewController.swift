@@ -35,6 +35,7 @@ class IngredientScanningViewController: CameraViewController {
     }
     
     // MARK: - Setup Views
+    /// Setups constraints and relavent design aspects
     func setupViews() {
         
         // Exit Button
@@ -100,7 +101,7 @@ class IngredientScanningViewController: CameraViewController {
         ingredientsCollectionView.bottomAnchor.constraint(equalTo: finishButton.topAnchor, constant: -20).isActive = true
         ingredientsCollectionView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
         ingredientsCollectionView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
-        ingredientsCollectionView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        ingredientsCollectionView.heightAnchor.constraint(equalToConstant: 120).isActive = true
         
         ingredientsCollectionView.showsHorizontalScrollIndicator = false
         ingredientsCollectionView.showsVerticalScrollIndicator = false
@@ -117,7 +118,6 @@ class IngredientScanningViewController: CameraViewController {
         // Ingredients Label Constraints
         ingredientsLabel.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(ingredientsLabel)
-        
         
         ingredientsLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
         ingredientsLabel.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
@@ -155,18 +155,7 @@ class IngredientScanningViewController: CameraViewController {
         basketCollectionView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     }
     
-    // Capture Input and send it to the Clarifai API
-    override func captureInput() {
-        if let image = self.currentFrame {
-            Ingredients.sharedInstance.predictFood(fromImage: image) { (predictions) in
-                DispatchQueue.main.async {
-                    self.ingredientsCollectionView.reloadData()
-                }
-            }
-        }
-    }
-    
-    // Enable or Disable Button
+    /// Method to enable or disable relevant buttons depending on state of user's basket
     func enableDisableContinueButton() {
         if Ingredients.sharedInstance.basket.count == 0 {
             finishButton.disable()
@@ -177,7 +166,22 @@ class IngredientScanningViewController: CameraViewController {
         }
     }
     
-    // Go to recipes page
+    // MARK: - Prediction
+    /// Use latest frame and send it to the Clarifai API. Once predictions are returned, reload collection view to populate with those predictions (results).
+    override func captureInput() {
+        if let image = self.currentFrame {
+            Ingredients.sharedInstance.predictFood(fromImage: image) { (success) in
+                if success {
+                    DispatchQueue.main.async {
+                        self.ingredientsCollectionView.reloadData()
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: - Segues
+    /// Go to recipes page
     @objc func goToRecipes() {
         self.performSegue(withIdentifier: "goToRecipes", sender: self)
         
@@ -185,7 +189,7 @@ class IngredientScanningViewController: CameraViewController {
         self.stop()
     }
     
-    // Dismiss scanning page and go back home
+    /// Dismiss scanning page and go back home
     @objc func dismissScanner() {
         self.navigationController?.popViewController(animated: true)
         
@@ -199,6 +203,7 @@ class IngredientScanningViewController: CameraViewController {
     }
 }
 
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension IngredientScanningViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return collectionView.tag == 0 ? Ingredients.sharedInstance.searchResults.count : Ingredients.sharedInstance.basket.count
@@ -213,7 +218,6 @@ extension IngredientScanningViewController: UICollectionViewDelegate, UICollecti
             cell.delegate = self
             cell.ingredient = Ingredients.sharedInstance.searchResults[indexPath.row]
             cell.updateLabel()
-            cell.updateImage()
             
             return cell
         } else {
@@ -242,7 +246,10 @@ extension IngredientScanningViewController: UICollectionViewDelegate, UICollecti
         return CGSize(width: 200, height: height)
     }
 }
+
+// MARK: - BasketCellDelegate
 extension IngredientScanningViewController: BasketCellDelegate {
+    /// Methods invoked from basket cells when a new ingredient is either added or removed
     func didRemoveIngredient() {
         self.justAdded = false
         

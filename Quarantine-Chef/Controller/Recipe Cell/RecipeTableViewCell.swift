@@ -47,7 +47,7 @@ class RecipeTableViewCell: UITableViewCell {
         disabledHighlightedAnimation = false
     }
     
-    // Make it appears very responsive to touch
+    // Make it appear very responsive to touch
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         originalContentViewFrame = self.recipeContentView.frame

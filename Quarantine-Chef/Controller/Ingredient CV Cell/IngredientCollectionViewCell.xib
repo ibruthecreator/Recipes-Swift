@@ -10,19 +10,21 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ingredientCell" id="gTV-IL-0wX" customClass="IngredientCollectionViewCell" customModule="Quarantine_Chef" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="200" height="208"/>
+            <rect key="frame" x="0.0" y="0.0" width="200" height="120"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="200" height="208"/>
+                <rect key="frame" x="0.0" y="0.0" width="200" height="120"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L8N-kX-I4J">
-                        <rect key="frame" x="0.0" y="0.0" width="200" height="247"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L8N-kX-I4J">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="120"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="120" id="rM3-xW-jWd"/>
+                        </constraints>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Rzl-O1-QcA">
-                        <rect key="frame" x="10" y="116.5" width="180" height="77.5"/>
+                        <rect key="frame" x="10" y="21.5" width="180" height="77.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ingredient" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sV0-0Y-acq">
                                 <rect key="frame" x="0.0" y="0.0" width="180" height="25.5"/>
@@ -44,7 +46,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="addDeleteButtonWasPressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="aUw-6z-fGL"/>
+                                    <action selector="addButtonWasPressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="0LZ-77-6gM"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -52,28 +54,24 @@
                             <constraint firstAttribute="height" constant="77.5" id="i5N-hW-NiO"/>
                         </constraints>
                     </stackView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b1W-ap-eYI">
-                        <rect key="frame" x="8" y="8" width="184" height="100.5"/>
-                    </imageView>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="b1W-ap-eYI" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="6KI-Hv-Hs7"/>
                 <constraint firstItem="Rzl-O1-QcA" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="E0V-or-kpG"/>
-                <constraint firstItem="Rzl-O1-QcA" firstAttribute="top" secondItem="b1W-ap-eYI" secondAttribute="bottom" constant="8" id="Jmf-Gn-Mei"/>
-                <constraint firstAttribute="trailing" secondItem="b1W-ap-eYI" secondAttribute="trailing" constant="8" id="Mck-Ch-huS"/>
+                <constraint firstAttribute="bottom" secondItem="L8N-kX-I4J" secondAttribute="bottom" id="V12-wm-Z3O"/>
+                <constraint firstItem="L8N-kX-I4J" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Wzp-ca-pmp"/>
+                <constraint firstItem="Rzl-O1-QcA" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="Z9z-IO-HC7"/>
                 <constraint firstAttribute="trailing" secondItem="Rzl-O1-QcA" secondAttribute="trailing" constant="10" id="cOp-qM-tfZ"/>
-                <constraint firstAttribute="bottom" secondItem="Rzl-O1-QcA" secondAttribute="bottom" constant="14" id="oOD-e9-wFC"/>
-                <constraint firstItem="b1W-ap-eYI" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="ooT-Ez-EWT"/>
+                <constraint firstAttribute="trailing" secondItem="L8N-kX-I4J" secondAttribute="trailing" id="pfy-ej-iqT"/>
+                <constraint firstItem="L8N-kX-I4J" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="s1E-ru-0dZ"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <size key="customSize" width="287" height="268"/>
+            <size key="customSize" width="287" height="172"/>
             <connections>
-                <outlet property="addDeleteButton" destination="fgm-se-0wF" id="eQ6-m0-v07"/>
-                <outlet property="ingredientImageView" destination="b1W-ap-eYI" id="maj-FI-aok"/>
+                <outlet property="addButton" destination="fgm-se-0wF" id="QRh-iY-JHa"/>
                 <outlet property="ingredientLabel" destination="sV0-0Y-acq" id="MMb-62-Gd8"/>
             </connections>
-            <point key="canvasLocation" x="308.69565217391306" y="150.66964285714286"/>
+            <point key="canvasLocation" x="308.69565217391306" y="182.8125"/>
         </collectionViewCell>
     </objects>
 </document>

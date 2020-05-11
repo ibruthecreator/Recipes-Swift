@@ -24,6 +24,6 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Setup Views
     func setupViews() {
-        //
+        // Nothing
     }
 }

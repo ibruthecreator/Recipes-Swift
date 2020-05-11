@@ -31,11 +31,8 @@ class SearchManuallyViewController: UIViewController {
         self.autocompleteTableView.reloadData()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        Ingredients.sharedInstance.clearBasketAndPredictions()
-    }
-    
     // MARK: - Setup Views
+    /// Setups constraints and relavent design aspects
     func setupViews() {
         basketCollectionViewHeightConstraint.constant = 0
         self.reloadViews()
@@ -66,10 +63,11 @@ class SearchManuallyViewController: UIViewController {
                     DispatchQueue.main.async {
                         UIView.performWithoutAnimation {
                             self.autocompleteTableView.reloadData()
+                            
+                            // Bottom two methods should help with preventing flicker when loading new images
                             self.autocompleteTableView.beginUpdates()
                             self.autocompleteTableView.endUpdates()
                         }
-//                        self..reloadData()
                     }
                     return
                 } else {
@@ -87,13 +85,13 @@ class SearchManuallyViewController: UIViewController {
         }
     }
     
-    // Dismiss keyboard
     @IBAction func dismissKeyboard(_ sender: Any) {
         self.resignFirstResponder()
     }
     
-    // Exit to home page
+    /// Exit to home page
     @IBAction func exitButtonWasPressed(_ sender: Any) {
+        Ingredients.sharedInstance.clearBasketAndPredictions()
         self.navigationController?.popViewController(animated: true)
     }
     

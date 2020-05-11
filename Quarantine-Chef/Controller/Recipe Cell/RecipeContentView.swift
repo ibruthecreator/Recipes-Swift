@@ -58,7 +58,6 @@ import UIKit
         self.layer.shadowRadius = 18
     }
     
-    // MARK: - Update Content
     func updateContent(includingImage: Bool = true) {
         if let recipe = recipe {
             if includingImage {
@@ -78,10 +77,9 @@ import UIKit
         }
     }
     
-    // Disable Trailing anchor and fix the width of the label
+    /// Disable Trailing anchor and fix the width of the label
     func fixLabelWidth(width: CGFloat) {
         labelWidthAnchor.constant = width
         labelTrailingAnchor.isActive = false
     }
-
 }

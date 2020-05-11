@@ -37,7 +37,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="titleEdgeInsets" minX="11" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="11" maxY="0.0"/>
-                                <state key="normal" title="Start Scanning" image="camera.viewfinder" catalog="system">
+                                <state key="normal" title="Scan Ingredients" image="camera.viewfinder" catalog="system">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                 </state>
@@ -327,13 +327,13 @@ Ingredients</string>
                                     <segue destination="60N-ea-EB4" kind="show" id="I5h-AM-Gz5"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="chicken, brocolli, chickpeas" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X59-WO-X9O">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="chicken, broccoli, chickpeas" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="X59-WO-X9O">
                                 <rect key="frame" x="20" y="229" width="374" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="zIA-b2-opg"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="yes" returnKeyType="done"/>
                                 <connections>
                                     <action selector="dismissKeyboard:" destination="qEK-tK-h8o" eventType="editingDidEndOnExit" id="oSq-Kg-AFj"/>
                                     <action selector="searchChanged:" destination="qEK-tK-h8o" eventType="editingChanged" id="4kG-Q9-GFJ"/>

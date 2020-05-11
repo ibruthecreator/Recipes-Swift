@@ -21,8 +21,12 @@ class Ingredients {
     let autocompleteIngredientEndpoint = "https://api.spoonacular.com/food/ingredients/autocomplete"
     let apiKey = "7845152a156345c9b7ffb9ea93a0b4ae"
     
-    // Make food prediction from an image
-    func predictFood(fromImage image: UIImage, completion: @escaping (_ predictions: [Ingredient]) -> ()) {
+    /// Make food prediction from an image
+    /// - Parameters:
+    ///   - image: image used to predict food
+    ///   - completion: completion handler to fire once action is completed in any degree
+    /// - Returns: returns ingredient predictions based on image
+    func predictFood(fromImage image: UIImage, completion: @escaping (_ success: Bool) -> ()) {
         if let image = ClarifaiImage(image: image) {
             app?.getModelByID(modelID, completion: { (model, error) in
                 model?.predict(on: [image]) { outputs, error in
@@ -39,14 +43,23 @@ class Ingredients {
                             }
                         }
                         
-                        completion(self.searchResults)
+                        completion(true)
+                    } else {
+                        completion(false)
                     }
                 }
             })
+        } else {
+            completion(false)
         }
     }
     
-    // MARK: - Fetch Auto Complete Results for Recipes
+    /// Fetch auto complete results for recipes from a string, if a user decides to search manually for their ingredients.
+    /// - Parameters:
+    ///   - text: text to search ingredients by
+    ///   - limit: limit of ingredients to return, default is 8
+    ///   - completion: completion handler to fire once action is completed in any degree
+    /// - Returns: return true or false depending on if query ran successfully
     func autocompleteIngredients(from text: String, limit: Int = 8, completion: @escaping (_ success: Bool) -> ()) {
         let query = "?apiKey=\(apiKey)&query=\(text)&number=\(limit)"
         self.searchResults.removeAll()
@@ -71,69 +84,46 @@ class Ingredients {
                         }
                     }
                 }.resume()
+            } else {
+                completion(false)
             }
+        } else {
+            completion(false)
         }
     }
     
-    // MARK: - Get Single Image From Single Ingredient
-    func getSingleIngredientImage(for ingredient: String, completion: @escaping (_ success: Bool, _ image: UIImage?) -> ()) {
-        let query = "?apiKey=\(apiKey)&query=\(ingredient)&number=1" // number = 1 -> only return on result
-        
-        if let urlString = (autocompleteIngredientEndpoint + query).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
-            if let url = URL(string: urlString) {
-                let request = URLRequest(url: url)
-                URLSession.shared.dataTask(with: request) { (data, response, error) in
-                    if let data = data {
-                        do {
-                            let ingredientObject = try JSONDecoder().decode([Ingredient].self, from: data)
-                            if let image = ingredientObject.first?.image {
-                                Recipes.sharedInstance.downloadImage(from: image, onlyFileName: true) { (image) in
-                                    completion(true, image)
-                                }
-                            } else {
-                                completion(false, nil)
-                            }
-                        } catch let error {
-                            print(error)
-                            completion(false, nil)
-                        }
-                    }
-                }.resume()
-            }
-        }
-    }
-    
-    // This function checks to see whether one of the generated predictions is already in the user's basket
-    // If it is, it will return false so that the same prediction isn't duplicated or redundantly shown
+    /// This function checks to see whether one of the generated predictions is already in the user's basket. If it is, it will return false so that the same prediction isn't duplicated or redundantly shown
+    /// - Parameter ingredient: Ingredient in question for whether or not it exists already in the basket
+    /// - Returns: true if basket contains ingredient, false otherwise
     func isInBasket(_ ingredient: Ingredient) -> Bool {
         return basket.contains(ingredient)
     }
     
-    // Adds an ingredient to a basket and makes sure that it's not already there (no duplicates)
-    // Adds to the *beginning* of the array
+    /// Adds an ingredient to a basket and makes sure that it's not already there (no duplicates) Adds to the beginning of the array
+    /// - Parameter ingredient: Ingredient to be added
     func addToBasket(_ ingredient: Ingredient) {
         if !isInBasket(ingredient) {       // If basket doesn't contain ingredient already
             self.basket.insert(ingredient, at: 0)
         }
     }
     
-    // Removes item from basket
+    /// Removesa single ingredient from the user's basket
+    /// - Parameter ingredient: Ingredient to be removed from basket
     func removeFromBasket(_ ingredient: Ingredient) {
         // Set value of basket array to a copy of basket array where the
         // specified ingredient to be removed is removed from the array itaelf
         basket = basket.filter { $0.name != ingredient.name }
     }
     
-    // Removes item from current predictions
-    // Used so that the ingredient is immediately removed from ingredient collection view when it is added to the basket
+    /// Removes item from current predictions. Used so that the ingredient is immediately removed from ingredient collection view when it is added to the basket
+    /// - Parameter ingredient: Ingredient to be removed from predictions
     func removeFromPredictions(_ ingredient: Ingredient) {
         // Set value of predictions array to a copy of predictions array where the
         // specified ingredient to be removed is removed from the array itaelf
         searchResults = searchResults.filter { $0.name != ingredient.name }
     }
     
-    // Clears basket and clears predicted ingredients
-    // This will be called everytime the scan view controller is dismissed and then revisited
+    /// Clears basket and clears predicted ingredients. This will be called everytime the scan view controller is dismissed and then revisited
     func clearBasketAndPredictions() {
         self.basket.removeAll()
         self.searchResults.removeAll()

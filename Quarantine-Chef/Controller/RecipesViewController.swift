@@ -32,6 +32,7 @@ class RecipesViewController: UIViewController {
     }
     
     // MARK: - Setup Views
+    /// Setups constraints and relavent design aspects
     func setupViews() {
         addBlurredStatusBar()
         
@@ -61,7 +62,7 @@ class RecipesViewController: UIViewController {
         ingredientsCollectionView.register(UINib(nibName: "BasketCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "basketCell")
     }
     
-    // MARK: - Fetch Ingredients
+    /// Method invoked when user enteres this view controller, given that to get to this VC the user should have a non-empty basket and the API will be able to search for recipes and update the table view with the results
     func fetchRecipes() {
         Recipes.sharedInstance.fetchRecipes { (success) in
             DispatchQueue.main.async {
@@ -72,38 +73,60 @@ class RecipesViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.recipesTableView.reloadData()
                 }
+            } else {
+                // If no recipes were found, display error message and prompt user to go back
+                let noRecipesAlert = UIAlertController(title: "No recipes found", message: "You may have added too few ingredients or too many incompatible ingredients", preferredStyle: .alert)
+                let adjustBasketAction = UIAlertAction(title: "Adjust Basket", style: .default) { (action) in
+                    self.navigationController?.popViewController(animated: true)
+                }
+                let leaveAction = UIAlertAction(title: "Leave and Clear Basket", style: .destructive) { (action) in
+                    // Empty everything
+                    Recipes.sharedInstance.recipes.removeAll()
+                    Ingredients.sharedInstance.clearBasketAndPredictions()
+                    
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
                 
-                return
+                noRecipesAlert.addAction(adjustBasketAction)
+                noRecipesAlert.addAction(leaveAction)
+                
+                DispatchQueue.main.async {
+                    self.present(noRecipesAlert, animated: true, completion: nil)
+                }
             }
-            // TODO: Display error message
         }
     }
     
-    // MARK: - Layout Table View
     func layoutTableViews() {
         let recipesContentSize = recipesTableView.contentSize.height
         recipesTableViewHeightConstraint.constant = recipesContentSize
     }
     
-    // MARK: - Layout Collection View
     func layoutCollectionView() {
         let ingredientsContentSize = ingredientsCollectionView.contentSize.height
         ingredientsCollectionViewHeightConstraint.constant = ingredientsContentSize
     }
     
-    // MARK: - Close
+    /// Present action sheet and ask user if they really want to leave (and clear basket) or to cancel (if they made a mistake).
     @IBAction func close(_ sender: Any) {
-        // TODO: - Maybe have an alert asking if the user really wants to leave, just in case it was an accident
+        let actionSheet = UIAlertController(title: "Are you sure you want to leave?", message: "You will lose your current basket and would have to start again.", preferredStyle: .actionSheet)
+        let leaveAction = UIAlertAction(title: "Leave and Clear Basket", style: .destructive) { (action) in
+            // Empty everything
+            Recipes.sharedInstance.recipes.removeAll()
+            Ingredients.sharedInstance.clearBasketAndPredictions()
+            
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        // Empty everything
-        Recipes.sharedInstance.recipes.removeAll()
-        Ingredients.sharedInstance.clearBasketAndPredictions()
+        actionSheet.addAction(leaveAction)
+        actionSheet.addAction(cancelAction)
         
-        self.navigationController?.popToRootViewController(animated: true)
+        present(actionSheet, animated: true, completion: nil)
     }
 }
 
-// MARK: - Table View Delegate Methods
+// MARK: - UITableViewDelegate, UITableViewDataSource
 extension RecipesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Recipes.sharedInstance.recipes.count
@@ -169,7 +192,7 @@ extension RecipesViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: - Collection View Delegate Methods
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 extension RecipesViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return Ingredients.sharedInstance.basket.count

@@ -45,7 +45,7 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
                 presentAnimation(with: transitionContext, viewToAnimate: toViewController.view)
                 
             case .dismiss:
-                // Need to add both otherwise the background will be black until the animation ends
+                // Need to add both `toViewController` and `fromViewController` otherwise the background will be black until the animation ends
                 transitionContext.containerView.addSubview(toViewController.view)
                 transitionContext.containerView.addSubview(fromViewController.view)
                 dismissAnimation(with: transitionContext, viewToAnimate: fromViewController.view)
@@ -69,6 +69,7 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
         
         view.frame = frame
         
+        // Matching anchors with source view so that bouncing from it to the detail view looks seamless.
         detailView.recipeCardContentViewLeadingAnchor.isActive = false
         detailView.recipeCardContentViewTrailingAnchor.isActive = false
         detailView.recipeCardContentViewWidthAnchor.constant = frame.width
@@ -133,6 +134,7 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
 
         UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 2.5, options: [], animations: {
             // Scroll to top incase the user scrolls down a bit while in the detail view
+            // This is similar to how the App Store cards behave
             detailView.scrollView.showsVerticalScrollIndicator = false
             detailView.scrollView.setContentOffset(CGPoint(x: 0, y: -detailView.scrollView.contentInset.top), animated: true)
             

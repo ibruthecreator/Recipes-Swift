@@ -63,7 +63,14 @@ class RecipeDetailViewController: UIViewController {
       return true
     }
     
-    // MARK: - Update Card
+    func layoutTableViews() {
+        let ingredientsTableViewContentSize = ingredientsTableView.contentSize.height
+        ingredientsTableViewHeightAnchor.constant = ingredientsTableViewContentSize
+       
+        self.view.layoutIfNeeded()  // Flush changes
+    }
+    
+    /// Update recipe card with main recipe information (image + name). This is the same recipe content view as the table view in `RecipesViewController`
     func updateCard() {
         if let recipe = recipe {
             DispatchQueue.main.async {
@@ -74,7 +81,7 @@ class RecipeDetailViewController: UIViewController {
         }
     }
     
-    // MARK: - Update Detail Content
+    /// Update cooking time and preparing time labels with relevant information (if available)
     func updateDetailContent() {
         if let cookingTime = recipe?.cookingMinutes {
             cookingTimeLabel.text = "\(cookingTime) mins"
@@ -89,12 +96,12 @@ class RecipeDetailViewController: UIViewController {
         }
     }
     
-    // MARK: - Dismiss VC
     @IBAction func dismissRecipe(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - View Recipe
+    /// Opens URL for user to view original recipe source (if available)
+    /// - Parameter sender: source that invoked the action (e.g. button)
     @IBAction func viewRecipe(_ sender: Any) {
         if let sourceURL = recipe?.sourceUrl {
             if let url = URL(string: sourceURL) {
@@ -109,7 +116,20 @@ class RecipeDetailViewController: UIViewController {
         }
     }
     
-    // MARK: - Display URL error
+    /// Present share sheet if the user decides to share the recipe via text or social media
+    /// - Parameter sender: source that invoked the action (e.g. button)
+    @IBAction func showShareSheet(_ sender: Any) {
+        if let recipe = recipe, let sourceURL = recipe.sourceUrl, let url = URL(string: sourceURL) {
+            let items: [Any] = ["Check out this recipe!", url]
+            let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
+            present(ac, animated: true)
+            
+        } else {
+            displayURLError()
+        }
+    }
+    
+    /// If a recipe does not have a URL for some reason, the user should know why the website is not opening or why they can't share a recipe.
     func displayURLError() {
         let alert = UIAlertController(title: "This recipe does not have it's own page", message: "Our apologies! But it seems like this recipe's webpage was lost.", preferredStyle: .alert)
         
@@ -118,34 +138,9 @@ class RecipeDetailViewController: UIViewController {
         
         present(alert, animated: true, completion: nil)
     }
-    
-    // MARK: - Layout Table Views
-    func layoutTableViews() {
-        let ingredientsTableViewContentSize = ingredientsTableView.contentSize.height
-        ingredientsTableViewHeightAnchor.constant = ingredientsTableViewContentSize
-        
-        self.view.layoutIfNeeded()  // Flush changes
-    }
-    
-    // MARK: - Show Share Sheet
-    @IBAction func showShareSheet(_ sender: Any) {
-        if let recipe = recipe, let sourceURL = recipe.sourceUrl, let url = URL(string: sourceURL) {
-            let items: [Any] = ["Check out this recipe!", url]
-            let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
-            present(ac, animated: true)
-            
-        } else {
-            let alert = UIAlertController(title: "Could not share recipe", message: "This recipe is missing some information, such as it's URL, and cannot be shared.", preferredStyle: .alert)
-            
-            let dismissAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-            alert.addAction(dismissAction)
-            
-            present(alert, animated: true, completion: nil)
-        }
-    }
 }
 
-// MARK: - Table View Delegate Methods
+// MARK: - UITableViewDelegate, UITableViewDataSource
 extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.recipe?.extendedIngredients?.count ?? 0
@@ -166,6 +161,7 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
 }
 
+// MARK: - UIViewControllerTransitioningDelegate
 extension RecipeDetailViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return AnimationController(animationDuration: 0.5, animationType: .present)

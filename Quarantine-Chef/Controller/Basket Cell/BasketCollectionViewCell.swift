@@ -35,7 +35,6 @@ class BasketCollectionViewCell: UICollectionViewCell {
         toggleDisplayMode()
     }
 
-    // MARK: - Update Label
     func updateLabel() {
         toggleDisplayMode() // Incase dark mode set later
         ingredientLabel.text = ingredient?.name?.capitalized ?? "Ingredient"
@@ -49,9 +48,8 @@ class BasketCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    // MARK: - Flash Black
-    // Just an indicator to show that this ingredient was just added,
-    // This makes it more visible in the case that it was added by accident and also as a way to provide feedback to the user after adding
+    /// Just an indicator to show that this ingredient was just added,
+    /// This makes it more visible in the case that it was added by accident and also as a way to provide feedback to the user after adding
     func flashWhite() {
         let blackView = UIView(frame: self.frame)
         blackView.backgroundColor = UIColor.black
@@ -63,7 +61,7 @@ class BasketCollectionViewCell: UICollectionViewCell {
         blackView.fadeOut(withDelay: 1.5)
     }
     
-    // MARK: - Remove From Basket
+    /// Remove ingredient from basket
     @IBAction func removeFromBasket(_ sender: Any) {
         if let ingredient = ingredient {
             Ingredients.sharedInstance.removeFromBasket(ingredient)
@@ -72,7 +70,7 @@ class BasketCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - Make Display
-    // Disables delete button
+    /// Disables delete button if its a display only cell (on `RecipesViewController`, for example).
     func makeDisplayOnly() {
         deleteButton.isEnabled = true
         deleteButton.isHidden = true

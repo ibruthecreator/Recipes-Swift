@@ -19,7 +19,7 @@ class HomeViewController: UIViewController {
     // Onboarding collection view content
     let images: [String] = ["bored", "search", "cook", "eat"]
     let titles: [String] = ["You're Bored.", "Find Recipes.", "Cook.", "Enjoy."]
-    let descriptions: [String] = ["Are you bored during quarantine? Are all your friends baking bread? Well, why not pass the time while learning how to cook!", "Using this app, use the limited ingredients you have (you don't want to go and buy stuff right now, do you?) and find out what you can make with it!.", "Get in the kitchen! Follow the recipes and make something amazing.", "Eat your creation. If you didn't undercook, overcook, or drop the food, it should be great! If it was a fail, tweet about it and you'll go trending. Win win!"]
+    let descriptions: [String] = ["Are you bored during quarantine? Are all your friends baking bread? Well, why not pass the time while learning how to cook!", "Using this app, use the limited ingredients you have (you don't want to go and buy stuff right now, do you?) and find out what you can make with it!", "Get in the kitchen! Follow the recipes and make something amazing.", "Eat your creation. If you didn't undercook, overcook, or drop the food, it should be great! If it was a fail, tweet about it and you'll go trending. Win win!"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,9 +27,9 @@ class HomeViewController: UIViewController {
         // Do any additional setup after loading the view.
         setupViews()
     }
-    
 
     // MARK: - Setup Views
+    /// Setups constraints and relavent design aspects
     func setupViews() {
         startScanningButton.layer.cornerRadius = 8
         
@@ -52,6 +52,8 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - Start Button
+    /// Takes user to scanning view
+    /// - Parameter sender: source that invoked the action (e.g. button)
     @IBAction func startScanningButtonWasPressed(_ sender: Any) {
         #if targetEnvironment(simulator)
             let errorAlert = UIAlertController(title: "App must be used on a real device", message: "Since this app makes use of the built-in camera on an iPhone, it must be run on a real device and not in the simulator.\n\nAlso, in the case that this is a Shopify engineer using this, 👋.", preferredStyle: .alert)
@@ -64,12 +66,14 @@ class HomeViewController: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return titles.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        // Cells for onboarding on the main view
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "onboardingCell", for: indexPath) as! OnboardingCollectionViewCell
         
         cell.onboardingImageView.image = UIImage(named: images[indexPath.row])
@@ -86,6 +90,5 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
-    
 }
 
