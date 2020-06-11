@@ -57,6 +57,10 @@ class SearchManuallyViewController: UIViewController {
     /// API search for recipes to populate table view with suggestions
     /// - Parameter sender: Data source of text, like a text field (searchTextField, in this case)
     @IBAction func searchChanged(_ sender: Any) {
+        // Remove all ingredients and reload right after to avoid fatal errors
+        Ingredients.sharedInstance.searchResults.removeAll()
+        self.autocompleteTableView.reloadData()
+
         if let sender = sender as? UITextField, let search = sender.text {
             Ingredients.sharedInstance.autocompleteIngredients(from: search) { (success) in
                 if success {
@@ -71,7 +75,7 @@ class SearchManuallyViewController: UIViewController {
                     }
                     return
                 } else {
-                    print("completion fail")
+                    print("Error")
                 }
             }
         }
@@ -105,6 +109,7 @@ extension SearchManuallyViewController: UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         // No search results returned, show an empty message
         if Ingredients.sharedInstance.searchResults.count == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "emptyCell", for: indexPath)
@@ -119,11 +124,14 @@ extension SearchManuallyViewController: UITableViewDelegate, UITableViewDataSour
                     cell.textLabel?.text = "There are no ingredients matching \"\(search)\""
                 }
             }
+            
             return cell
-        }
-        
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientCell", for: indexPath) as? IngredientSearchTableViewCell {
+            
+        } else if let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientCell", for: indexPath) as? IngredientSearchTableViewCell {
             cell.delegate = self
+            
+            // Prevent "flickering" in images from search results
+            cell.clearImage()
             
             // TODO: - Fix index out of range bug
             if Ingredients.sharedInstance.searchResults.indices.contains(indexPath.row) {

@@ -48,14 +48,18 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
                 // Need to add both `toViewController` and `fromViewController` otherwise the background will be black until the animation ends
                 transitionContext.containerView.addSubview(toViewController.view)
                 transitionContext.containerView.addSubview(fromViewController.view)
-                dismissAnimation(with: transitionContext, viewToAnimate: fromViewController.view)
+                dismissAnimation(with: transitionContext)
         }
     }
     
     func presentAnimation(with transitionContext: UIViewControllerContextTransitioning, viewToAnimate view: UIView) {
+        // viewToAnimate -> cardContentView (cell content view)
+        // detailView -> final detail view (VC)
+        
         let originalFrame = view.frame  // Target's original frame in the "from" view controller, which is essentially full screen
         let originalBounds = view.bounds // VC's bounds in its own coordinate system
-                
+
+        
         guard let detailView = transitionContext.viewController(forKey: .to) as? RecipeDetailViewController else {
             transitionContext.completeTransition(false)
             return
@@ -116,15 +120,15 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
         }
     }
     
-    func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning, viewToAnimate view: UIView) {
-        view.clipsToBounds = true
-        
+    func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning) {
         guard let detailView = transitionContext.viewController(forKey: .from) as? RecipeDetailViewController else {
             transitionContext.completeTransition(false)
             return
         }
+        
+        detailView.view.clipsToBounds = true
        
-        // Get frame of selected recipe
+        // Get cell frame (initial state) of selected recipe
         guard let frame = detailView.cellFrame else {
             transitionContext.completeTransition(false)
             return
@@ -138,8 +142,8 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
             detailView.scrollView.showsVerticalScrollIndicator = false
             detailView.scrollView.setContentOffset(CGPoint(x: 0, y: -detailView.scrollView.contentInset.top), animated: true)
             
-            view.layer.cornerRadius = 18
-            view.frame = frame
+            detailView.view.layer.cornerRadius = 18
+            detailView.view.frame = frame
              
             detailView.recipeCardContentViewWidthAnchor.constant = frame.width
             detailView.recipeCardContentViewHeightConstraint.constant = frame.height

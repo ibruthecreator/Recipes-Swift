@@ -12,14 +12,17 @@ import Clarifai
 class Ingredients {
     static let sharedInstance = Ingredients()
     
+    // ClarifAI API - needed for image CV search functionality
     let app = ClarifaiApp(apiKey: "a22af8ed477e4549b2ce6ae2dc6cac02")
     let modelID = "bd367be194cf45149e75f01d59f77ba7" // The ID of the public API we are using to analyze our image
-    var searchResults: [Ingredient] = []
-    var basket: [Ingredient] = []
     
     // Spoontacular API - needed here for autocomplete functionality
-    let autocompleteIngredientEndpoint = "https://api.spoonacular.com/food/ingredients/autocomplete"
-    let apiKey = "7845152a156345c9b7ffb9ea93a0b4ae"
+    let spoontacularEndpoint = "https://api.spoonacular.com/food/ingredients/autocomplete"
+    let spoontacularAPIKey = "7845152a156345c9b7ffb9ea93a0b4ae"
+    
+    // Shared variables
+    var searchResults: [Ingredient] = []
+    var basket: [Ingredient] = []
     
     /// Make food prediction from an image
     /// - Parameters:
@@ -36,8 +39,9 @@ class Ingredients {
                         for output in outputs {
                             for concept in output.concepts {
                                 let ingredient = Ingredient(name: concept.conceptName, image: nil)
+                                
                                 // Only want reasonably plausible options that are not already in the users basket
-                                if concept.score > 0.85 && !self.isInBasket(ingredient) {
+                                if concept.score > 0.85 && !self.basket.contains(ingredient) {
                                     self.searchResults.append(ingredient)
                                 }
                             }
@@ -61,10 +65,9 @@ class Ingredients {
     ///   - completion: completion handler to fire once action is completed in any degree
     /// - Returns: return true or false depending on if query ran successfully
     func autocompleteIngredients(from text: String, limit: Int = 8, completion: @escaping (_ success: Bool) -> ()) {
-        let query = "?apiKey=\(apiKey)&query=\(text)&number=\(limit)"
-        self.searchResults.removeAll()
+        let query = "?apiKey=\(spoontacularAPIKey)&query=\(text)&number=\(limit)"
         
-        if let urlString = (autocompleteIngredientEndpoint + query).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+        if let urlString = (spoontacularEndpoint + query).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
             if let url = URL(string: urlString) {
                 let request = URLRequest(url: url)
                 URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -72,8 +75,8 @@ class Ingredients {
                         do {
                             let ingredients = try JSONDecoder().decode([Ingredient].self, from: data)
                             self.searchResults = ingredients.filter({ (ingredient) -> Bool in
-                                    // Leave in array only if it is not already in basket (!)
-                                    return !self.isInBasket(ingredient)
+                                // Leave in array only if it is not already in basket (!)
+                                return !self.basket.contains(ingredient)
                             }) // Remove predictions that are already in basket
                             
                             // TODO: - Apply above filter logic to the clarifAI predictions as well
@@ -92,17 +95,10 @@ class Ingredients {
         }
     }
     
-    /// This function checks to see whether one of the generated predictions is already in the user's basket. If it is, it will return false so that the same prediction isn't duplicated or redundantly shown
-    /// - Parameter ingredient: Ingredient in question for whether or not it exists already in the basket
-    /// - Returns: true if basket contains ingredient, false otherwise
-    func isInBasket(_ ingredient: Ingredient) -> Bool {
-        return basket.contains(ingredient)
-    }
-    
     /// Adds an ingredient to a basket and makes sure that it's not already there (no duplicates) Adds to the beginning of the array
     /// - Parameter ingredient: Ingredient to be added
     func addToBasket(_ ingredient: Ingredient) {
-        if !isInBasket(ingredient) {       // If basket doesn't contain ingredient already
+        if !basket.contains(ingredient) {       // If basket doesn't contain ingredient already
             self.basket.insert(ingredient, at: 0)
         }
     }

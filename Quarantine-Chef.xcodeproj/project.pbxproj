@@ -36,7 +36,6 @@
 		10A853DA23C7AE0F008FB36F /* UIView+RoundCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A853D923C7AE0E008FB36F /* UIView+RoundCorners.swift */; };
 		10A853DE23CA7C9C008FB36F /* RecipeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A853DD23CA7C9C008FB36F /* RecipeDetailViewController.swift */; };
 		10A853E123CA7D64008FB36F /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A853E023CA7D64008FB36F /* AnimationController.swift */; };
-		10B1F66F23BC6CFB005A5440 /* SnappingCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B1F66E23BC6CFB005A5440 /* SnappingCollectionViewLayout.swift */; };
 		10B1F67323BD5BC6005A5440 /* RecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B1F67223BD5BC6005A5440 /* RecipesViewController.swift */; };
 		10B1F67523BD799A005A5440 /* Recipes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B1F67423BD799A005A5440 /* Recipes.swift */; };
 		10B1F67723BE9EEB005A5440 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B1F67623BE9EEB005A5440 /* Recipe.swift */; };
@@ -80,7 +79,6 @@
 		10A853D923C7AE0E008FB36F /* UIView+RoundCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+RoundCorners.swift"; sourceTree = "<group>"; };
 		10A853DD23CA7C9C008FB36F /* RecipeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewController.swift; sourceTree = "<group>"; };
 		10A853E023CA7D64008FB36F /* AnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
-		10B1F66E23BC6CFB005A5440 /* SnappingCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnappingCollectionViewLayout.swift; sourceTree = "<group>"; };
 		10B1F67223BD5BC6005A5440 /* RecipesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesViewController.swift; sourceTree = "<group>"; };
 		10B1F67423BD799A005A5440 /* Recipes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipes.swift; sourceTree = "<group>"; };
 		10B1F67623BE9EEB005A5440 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
@@ -210,7 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				107B0A2A23BA9966004105BD /* OnboardingCollectionViewCell.swift */,
-				10B1F66E23BC6CFB005A5440 /* SnappingCollectionViewLayout.swift */,
 			);
 			path = "Onboarding Cell";
 			sourceTree = "<group>";
@@ -426,7 +423,6 @@
 				10F58725245E9DDB00BD6766 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				108C6B0823B6B388008E9724 /* IngredientScanningViewController.swift in Sources */,
 				10B1F67B23BEA245005A5440 /* RecipeTableViewCell.swift in Sources */,
-				10B1F66F23BC6CFB005A5440 /* SnappingCollectionViewLayout.swift in Sources */,
 				107B0A2B23BA9966004105BD /* OnboardingCollectionViewCell.swift in Sources */,
 				1001495623CFBC3A0087D746 /* UIVIew+Edges.swift in Sources */,
 				108C6B0F23B6CF18008E9724 /* UIView+FadeInOut.swift in Sources */,

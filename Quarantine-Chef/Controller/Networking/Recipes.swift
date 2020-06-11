@@ -13,16 +13,18 @@ class Recipes {
     
     var recipes: [Recipe] = []
     
+    // API Endpoint - find recipes given ingredients
     let findByIngredientsEndpoint = "https://api.spoonacular.com/recipes/findByIngredients"
-    let informationBulkEndpoint = "https://api.spoonacular.com/recipes/informationBulk"
-    let autocompleteIngredientEndpoint = "https://api.spoonacular.com/food/ingredients/autocomplete"
     
+    // API Endpoint - extract details froom a specific recipe
+    let informationBulkEndpoint = "https://api.spoonacular.com/recipes/informationBulk"
+    
+    // Base URL - base url for ingredient images
     let ingredientImageURL = "https://spoonacular.com/cdn/ingredients_500x500/"
 
-    /// Fixed parameters - everything except ingredients
     let apiKey = "7845152a156345c9b7ffb9ea93a0b4ae"
     
-    /// Store images for cache, prevents flickering in transition
+    // Store images for cache, prevents flickering in transition
     let imageCache = NSCache<NSString, UIImage>()
     
     // MARK: - Fetch Recipes
@@ -31,11 +33,12 @@ class Recipes {
         // 'compactMap' makes the basket array into an array of strings, which can then be concatenated with 'joined' ("," between words is how the API expects input)
         let allIngredients = Ingredients.sharedInstance.basket.compactMap{$0.name}.joined(separator: ",")
         
-        // ranking = 2, per API documents minimizes the recipes with missing ingredients and optimizes for recipes with included recipes
-        let query = "?apiKey=\(apiKey)&ingredients=\(allIngredients)&number=5&ranking=2&ignorePantry=true"
+        // ranking = 1, per API documents minimizes the recipes with missing ingredients and optimizes for recipes with included recipes
+        let query = "?apiKey=\(apiKey)&ingredients=\(allIngredients)&number=5&ranking=1&ignorePantry=true"
         
         // Add Percent Encoding is needed in case the ingredients any of the ingredients have spaces
         // For example, "Bell Pepper" raw in the URL would return the error, whereas "Bell%20Pepper" has the same value but is URL compatible
+        
         if let urlString = (findByIngredientsEndpoint + query).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
             print(urlString)
             if let url = URL(string: urlString) {
@@ -96,7 +99,7 @@ class Recipes {
     /// Downloads a recipe or ingredient image provided by the API, provided a URL, and returns a UIImage
     /// - Parameters:
     ///   - imageFile: Name of the file and extension
-    ///   - onlyFileName: Boolean which is true if the provided image file parameter is only the name and extension and false if the provided image file parameter includes the entire email
+    ///   - onlyFileName: Boolean which is true if the provided image file parameter is only the name and extension and false if the provided image file parameter includes the entire url
     ///   - completion: Returns a UIImage if successful
     func downloadImage(from link: String, onlyFileName: Bool = false, completion: @escaping (_ image: UIImage) -> () = {_ in } ) {
         // If its only the file name and extension, add the ingredient image URL to the former end of the URL as this may be an ingredient image.

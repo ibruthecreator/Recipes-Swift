@@ -8,7 +8,7 @@
 
 import UIKit
 
-@IBDesignable final class RecipeContentView: UIView, NibLoadable {
+class RecipeContentView: UIView, NibLoadable {
 
     // MARK: - Outlets
     @IBOutlet weak var recipeImageView: UIImageView!

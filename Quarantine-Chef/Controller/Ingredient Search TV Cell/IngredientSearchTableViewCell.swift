@@ -37,12 +37,14 @@ class IngredientSearchTableViewCell: UITableViewCell {
         addButton.layer.cornerRadius = addButton.frame.height / 2
     }
     
+    func clearImage() {
+        self.ingredientImageView.image = nil
+    }
+    
     func updateContent() {
         if let ingredient = ingredient {
             // Set ingredient name label
             ingredientNameLabel.text = ingredient.name?.capitalized ?? "NaN"
-            
-            self.ingredientImageView.image = nil
             
             // Download image and place in image view
             Recipes.sharedInstance.downloadImage(from: ingredient.image ?? "none.jpg", onlyFileName: true) { (image) in

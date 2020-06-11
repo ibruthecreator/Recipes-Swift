@@ -29,6 +29,4 @@ class LeftAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
         return attributes
     }
-    
 }
-
