@@ -15,7 +15,7 @@ in the project directory to install any dependencies that may be missing.
 This project only uses the [Clarifai](https://cocoapods.org/pods/Clarifai) library.
 
 ## Art 
-Using the amazing [Open Peeps](https://www.openpeeps.com/) library for some of the graphics. 
+Using [Open Peeps](https://www.openpeeps.com/) library for some of the graphics. 
 
 ## Screenshots
 ![Onboarding](./images/Onboarding.png "Onboarding")
